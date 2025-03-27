@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='user/css/header.css') }}">
+
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4 py-2 mb-3">
+    <div class="container-fluid align-items-center">
+        <!-- Tên trang web -->
+        <span class="website-name">osas</span>
+
+        <!-- Các hành động trong header -->
+        <div class="header-actions d-flex justify-content-end align-items-center gap-3 flex-grow-1">
+            <!-- Thông báo -->
+            <div class="position-relative">
+                <i class="fa fa-bell fs-5"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    4
+                </span>
+            </div>
+
+            <!-- Nhóm người dùng -->
+            <i class="fa fa-users fs-5"></i>
+
+            <!-- Cài đặt -->
+            <i class="fa fa-cog fs-5"></i>
+
+            <!-- Avatar + Dropdown -->
+            <div class="user-dropdown position-relative">
+              <!-- Avatar -->
+              <img src="https://i.pravatar.cc/40" class="rounded-circle avatar" width="32" height="32" alt="User" onclick="toggleDropdown()">
+
+              <!-- Dropdown -->
+              <div class="dropdown-menu-custom" id="userDropdown">
+                  <div class="user-info text-center py-3">
+                      <img src="https://i.pravatar.cc/80" class="rounded-circle mb-2" width="60" height="60" alt="User">
+                      <h6 class="mb-0">Jaydon Frankie</h6>
+                      <p class="text-muted small">demo@minimals.cc</p>
+                  </div>
+                  <hr class="my-2">
+                  <ul class="list-unstyled px-3">
+                      <li><i class="fa fa-user me-2"></i>Profile</li>
+                      <li><i class="fa fa-cog me-2"></i>Account settings</li>
+                  </ul>
+                  <div class="px-3 py-2">
+                    <a href="/logout"><button class="btn btn-outline-danger w-100" onclick="return confirm('Are you sure about that ?')" >Logout</button></a>            
+                  </div>
+              </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+      function toggleDropdown() {
+          const dropdown = document.getElementById("userDropdown");
+          dropdown.classList.toggle("show");
+      }
+      </script>      
+</nav>
