@@ -1,0 +1,161 @@
+nav.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+  height: 56px; /* Chiều cao cố định cho đồng bộ */
+}
+
+nav .container-fluid > * {
+  margin-left: 10px;
+}
+
+nav .fa {
+  cursor: pointer;
+}
+
+nav img {
+  cursor: pointer;
+}
+
+/* Sidebar sát với header */
+.sidebar {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Tên trang web */
+.website-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #343a40;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  nav.navbar {
+      height: auto; /* Cho phép chiều cao tự điều chỉnh trên mobile */
+      padding: 10px 15px; /* Giảm padding */
+  }
+
+  /* Ẩn các phần tử trong container-fluid, trừ tên trang web */
+  .navbar .container-fluid .header-actions {
+      display: none;
+  }
+
+  /* Chỉ giữ tên trang web hiển thị */
+  .website-name {
+      font-size: 1.2rem; /* Giảm kích thước chữ trên mobile */
+      margin: 0;
+  }
+}
+/* Dropdown ẩn mặc định */
+.dropdown-menu-custom {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 250px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+/* Avatar */
+.avatar {
+  cursor: pointer;
+  border: 2px solid #ddd;
+  transition: transform 0.2s ease, border-color 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+  border-color: #007bff;
+}
+
+/* Dropdown menu */
+.dropdown-menu-custom {
+  display: none;
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 280px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.8s ease;
+}
+
+/* Khi menu được bật */
+.dropdown-menu-custom.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* User info */
+.dropdown-menu-custom .user-info {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  padding: 16px;
+  text-align: center;
+}
+
+.dropdown-menu-custom .user-info h6 {
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.dropdown-menu-custom .user-info p {
+  margin-bottom: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Menu items */
+.dropdown-menu-custom ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.dropdown-menu-custom ul li {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+.dropdown-menu-custom ul li i {
+  margin-right: 10px;
+  color: #6c757d;
+  width: 20px;
+  text-align: center;
+}
+
+.dropdown-menu-custom ul li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Badge */
+.dropdown-menu-custom .badge {
+  font-size: 0.75rem;
+  padding: 2px 6px;
+}
+
+/* Logout button */
+.dropdown-menu-custom .btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+

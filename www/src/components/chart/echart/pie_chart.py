@@ -16,15 +16,15 @@ class PieChart(Chart):
             # Create a DataFrame with only the required columns
             new_df = self.data.groupby(category_col)[value_col].sum().reset_index()
             total = new_df[value_col].sum()
-            new_df["percentage"] = new_df[value_col] / total
+            new_df["_percentage"] = new_df[value_col] / total
 
             # Group small values into "Others"
-            mask = new_df["percentage"] < threshold
+            mask = new_df["_percentage"] < threshold
             others_value = new_df.loc[mask, value_col].sum()
 
             if others_value > 0:
                 new_df = new_df.loc[~mask]
-                new_df = new_df.concat([new_df, pd.DataFrame({category_col: [group_other_name], value_col: [others_value]})], ignore_index=True)
+                new_df = pd.concat([new_df, pd.DataFrame({category_col: [group_other_name], value_col: [others_value]})], ignore_index=True)
                 
             data_present = new_df[[category_col, value_col]].values.tolist()
             # Create a Pie chart

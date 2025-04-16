@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\Admin\Desktop\www\.venv
+set VIRTUAL_ENV=E:\demoCode\template_jinja\www\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 

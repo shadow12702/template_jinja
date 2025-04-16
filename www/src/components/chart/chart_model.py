@@ -15,3 +15,4 @@ class ChartModel(BaseModel):
     show_legend: bool = True
     show_grid: bool = True
     size: ChartSize = ChartSize(width=600, height=300)
+    

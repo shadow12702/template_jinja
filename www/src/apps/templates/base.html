@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/accounts/accounts_management.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/awr_database/awr_database.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/best_practice/add_bp.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/best_practice/bp_management.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/best_practice/edit_bp.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/customer/add_new_customer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/customer/customer_management.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/customer/edit_customer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/patches/add_patches.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/patches/edit_patches.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/patches/patches_management.css') }}">
+</head>
+    
+<body>
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='user/js/sidebar_menu.js') }}"></script>
+</body>
+
+</html>

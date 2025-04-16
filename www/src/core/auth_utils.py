@@ -1,6 +1,7 @@
 from flask import  make_response, redirect, request, url_for
 from core.request import RequestHandler
-from model.login_response import RefreshTokenResponse
+from apps.models.responses.refresh_token_response import RefreshTokenResponse
+
 
 def validate_refresh_token():
     '''Validate and refresh token when token expired'''
