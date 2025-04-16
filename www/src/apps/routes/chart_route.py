@@ -12,7 +12,7 @@ chart_route = Blueprint('chart_route', __name__)
 
 # Echarts
 
-@chart_route.route("/chart-route/<chart_id>")
+@chart_route.route("/echarts/<chart_id>")
 def show_echart_chart( chart_id):
     # Lấy dữ liệu menu
     chart_response = RequestHandler.post("/cdb/get-ash-overall-wait-class", 
