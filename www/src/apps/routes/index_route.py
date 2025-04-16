@@ -22,7 +22,7 @@ def index():
             menu = ApiService.get_menu(0) 
             # Lấy dữ liệu khách hàng
             customers = ApiService.get_customer(0)
-            db_repo_info = ApiService.get_db_repo_info(customers[0].Code) if customers else []
+            db_repo_info = ApiService.get_db_repo_info(customers[0].code) if customers else []
             
             selected_route = request.args.get('route', '/dashboard') 
             return render_template("index.html", selected_route = selected_route,

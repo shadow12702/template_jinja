@@ -32,10 +32,11 @@ def get_config():
     return []  
 
 @admin_route.route("/admin")
-def admin_dashboard():
+def admin():
     user_data = session.get('user')
     user = UserModel(**user_data) if user_data else None
     menu = ApiService.get_menu(1)
+
     return render_template("admin.html", user=user, menu=menu )
 
 

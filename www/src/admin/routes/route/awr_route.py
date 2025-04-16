@@ -25,7 +25,7 @@ def awr():
             # Lấy dữ liệu khách hàng
             customers = ApiService.get_customer(0)
             # Lấy thông tin repo db
-            db_repo_info = ApiService.get_db_repo_info(customers[0].Code) if customers else []
+            db_repo_info = ApiService.get_db_repo_info(customers[0].code) if customers else []
             
             return render_template("awr_database.html", 
                                     user=user, 

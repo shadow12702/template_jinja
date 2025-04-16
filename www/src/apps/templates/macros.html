@@ -1,36 +1,40 @@
-
 {% macro render_menu(menu, parent_code="") %}
-	<ul id="main-menu" class="nav flex-column">
-		{% for item in menu %}
-			{% if item.parent == "" %}
-				<li class="nav-item w-100"  aria-expanded="false">
-					{% if not item.has_children %}
-						<a href="{{ url_for('index_route.index', route=item.route) }}">
+<ul id="main-menu" class="nav flex-column">
+	{% for item in menu %} {% if item.parent == "" %}
+	<li class="nav-item w-100" aria-expanded="false">
+		{% if not item.has_children %}
+		<!-- <a href="{{ url_for('index_route.index', route=item.route) }}">
 							<i class="{{ item.icon }}"></i> {{ item.name }}
-						</a>
-					{% else %}
-						<span >
-							<i class="{{ item.icon }}"></i> {{ item.name }}
-						</span>
-					{% endif %}
-					{% if item.has_children %}
-						<ul>
-							{% for child in menu %}
-								{% if child.parent == item.code %}
-									
-									<a class="nav-link" href="{{ url_for('index_route.index', route='/echarts/' + child.code) }}">
-										{{ child.name }}
-									</a>
-								
-								{% endif %}
-							{% endfor %}
-						</ul>
-					{% endif %}
-				</li>
-			{% endif %}
-		{% endfor %}
-	</ul>
+						</a> -->
+		{% if item.admin != 1 %}
+		<a
+			href="{{ url_for('index_route.index', route=item.route) }}"
+			data-route="{{ item.route }}">
+			<i class="{{ item.icon }}"></i> {{ item.name }}
+		</a>
+		{% else %}
+		<a
+			href="{{ url_for('admin_route.admin', route=item.route) }}"
+			data-route="{{ item.route }}">
+			<i class="{{ item.icon }}"></i> {{ item.name }}
+		</a>
+		{% endif %} {% else %}
+		<span> <i class="{{ item.icon }}"></i> {{ item.name }} </span>
+		{% endif %} {% if item.has_children %}
+		<ul>
+			{% for child in menu %} {% if child.parent == item.code %}
 
-{% endmacro %} 
-{{ render_menu(menu) }}
+			<a
+				class="nav-link"
+				href="{{ url_for('index_route.index', route='/echarts/' + child.code) }}">
+				{{ child.name }}
+			</a>
 
+			{% endif %} {% endfor %}
+		</ul>
+		{% endif %}
+	</li>
+	{% endif %} {% endfor %}
+</ul>
+
+{% endmacro %} {{ render_menu(menu) }}
