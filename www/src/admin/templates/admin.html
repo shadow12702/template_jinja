@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Quản trị hệ thống
+Trang chủ
 {% endblock %}
 
 {% block content %}
@@ -21,16 +21,10 @@ Quản trị hệ thống
     <div class="col-10 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out;overflow: hidden;">
         {% include "header.html" %}
 
-        <!-- Đơn giản chỉ thêm iframe -->
-        <iframe src="{{route}}" frameborder="0" style="width: 100%; height: calc(100vh - 56px); border: none;"></iframe>
+
+        <h1>test admin<h1>
+        <iframe src="{{route}}" frameborder="0"></iframe>
+            
     </div>
 </div>
-
-<!-- Script đơn giản cho toggle sidebar -->
-<script>
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('collapsed');
-    }
-</script>
 {% endblock %}
