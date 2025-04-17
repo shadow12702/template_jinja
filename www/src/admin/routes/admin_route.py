@@ -22,15 +22,6 @@ admin_route.register_blueprint(best_practice_route)
 
 # Phần còn lại của code không thay đổi
 
-def get_config():
-    # Gọi API để lấy menu
-    response = RequestHandler.post( "/config/get-all", data={"type": type}, headers={"Content-Type": "application/json"})
-    if response.status_code == 200:
-        if response.status_code == 200:
-            configs = [ConfigResponse(**item) for item in response.json()]
-            return configs
-    return []  
-
 @admin_route.route("/admin")
 def admin():
     user_data = session.get('user')
@@ -40,9 +31,3 @@ def admin():
     return render_template("admin.html", user=user, menu=menu )
 
 
-@admin_route.route("/admin/config", methods=["GET", "POST"])
-def admin_config():
-    # config = get_config()
-    config = [{"test": "test"}]
-    if config:
-        return render_template("customer/test.html", config=config)
