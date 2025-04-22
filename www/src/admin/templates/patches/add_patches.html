@@ -1,22 +1,11 @@
-{% extends "base.html" %}
-
-{% block title %}
-Add New Patch
-{% endblock %}
-
-{% block content %}
+{% include 'link.html' %}
 <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/patches/add_patches.css') }}">
 <div class="row">
     <!-- Sidebar -->
 
 
     <!-- Main Content -->
-    <div class="col-10 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
-        {% include "header.html" %}
-
-        <!-- Include Font Awesome for icons (cập nhật phiên bản mới nhất) -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        
+    <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
         <div class="container">
             <div class="page-header d-flex justify-content-between align-items-center">
                 <div>
@@ -46,20 +35,20 @@ Add New Patch
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="PatchID">Patch ID <span class="text-danger">*</span></label>
+                                        <label for="id">Patch ID <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                            <input type="number" class="form-control" id="PatchID" name="PatchID" placeholder="e.g., 1001" required>
+                                            <input type="number" class="form-control" id="id" name="id" placeholder="e.g., 1001" required>
                                         </div>
                                         <small class="form-text text-muted">A unique identifier for the patch</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="PatchType">Patch Type <span class="text-danger">*</span></label>
+                                        <label for="patch_type">Patch Type <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                                            <input type="text" class="form-control" id="PatchType" name="PatchType" placeholder="e.g., Security" required>
+                                            <input type="text" class="form-control" id="patch_type" name="patch_type" placeholder="e.g., Security" required>
                                         </div>
                                         <small class="form-text text-muted">Type of the patch (e.g., Security, Bug Fix)</small>
                                     </div>
@@ -69,10 +58,10 @@ Add New Patch
                             <div class="row mt-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="DbVersion">DB Version <span class="text-danger">*</span></label>
+                                        <label for="db_version">DB Version <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-database"></i></span>
-                                            <input type="text" class="form-control" id="DbVersion" name="DbVersion" placeholder="e.g., 19c" required>
+                                            <input type="text" class="form-control" id="db_version" name="db_version" placeholder="e.g., 19c" required>
                                         </div>
                                         <small class="form-text text-muted">Database version this patch applies to</small>
                                     </div>
@@ -83,7 +72,7 @@ Add New Patch
                                         <label for="Type">Type <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                                            <input type="text" class="form-control" id="Type" name="Type" placeholder="e.g., Security" required>
+                                            <input type="text" class="form-control" id="type" name="type" placeholder="e.g., Security" required>
                                         </div>
                                         <small class="form-text text-muted">Additional type information</small>
                                     </div>
@@ -96,7 +85,7 @@ Add New Patch
                                         <label for="Format">Format <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                            <input type="text" class="form-control" id="Format" name="Format" placeholder="e.g., 123" required>
+                                            <input type="text" class="form-control" id="format" name="format" placeholder="e.g., 123" required>
                                         </div>
                                         <small class="form-text text-muted">Format number of the patch</small>
                                     </div>
@@ -104,10 +93,10 @@ Add New Patch
                                 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="PatchRoot">Patch Root <span class="text-danger">*</span></label>
+                                        <label for="fixed_in_ru">Patch Root <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-folder"></i></span>
-                                            <input type="number" class="form-control" id="PatchRoot" name="PatchRoot" placeholder="e.g., 0" required>
+                                            <input type="number" class="form-control" id="fixed_in_ru" name="fixed_in_ru" placeholder="e.g., 0" required>
                                         </div>
                                         <small class="form-text text-muted">Root identifier for the patch</small>
                                     </div>
@@ -117,10 +106,10 @@ Add New Patch
                             <div class="row mt-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="FixedInRU">Fixed in RU</label>
+                                        <label for="fixed_in_ru">Fixed in RU</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-tools"></i></span>
-                                            <input type="text" class="form-control" id="FixedInRU" name="FixedInRU" placeholder="e.g., RU_2023">
+                                            <input type="text" class="form-control" id="fixed_in_ru" name="fixed_in_ru" placeholder="e.g., RU_2023">
                                         </div>
                                         <small class="form-text text-muted">Release Update where this patch is fixed (optional)</small>
                                     </div>
@@ -128,10 +117,10 @@ Add New Patch
                                 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="FixedInMRP">Fixed in MRP</label>
+                                        <label for="fixed_in_mrp">Fixed in MRP</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-tools"></i></span>
-                                            <input type="text" class="form-control" id="FixedInMRP" name="FixedInMRP" placeholder="e.g., MRP_2023">
+                                            <input type="text" class="form-control" id="fixed_in_mrp" name="fixed_in_mrp" placeholder="e.g., MRP_2023">
                                         </div>
                                         <small class="form-text text-muted">Monthly Recommended Patch where this is fixed (optional)</small>
                                     </div>
@@ -144,7 +133,7 @@ Add New Patch
                                         <label for="Description">Description</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
-                                            <textarea class="form-control" id="Description" name="Description" rows="3" placeholder="e.g., This patch addresses security vulnerabilities"></textarea>
+                                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="e.g., This patch addresses security vulnerabilities"></textarea>
                                         </div>
                                         <small class="form-text text-muted">A brief description of the patch (optional)</small>
                                     </div>
@@ -171,5 +160,4 @@ Add New Patch
 
 {% block scripts %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-{% endblock %}
 {% endblock %}

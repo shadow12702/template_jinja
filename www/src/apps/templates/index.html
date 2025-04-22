@@ -1,29 +1,14 @@
-{% extends "base.html" %}
-
-{% block title %}
-Trang chủ
-{% endblock %}
-
+{% extends 'base.html' %}
 {% block content %}
-<div class="row">
-    <!-- Sidebar -->
-    <div class="col-2 sidebar" id="sidebar">
-        <div class="d-flex align-items-center p-3 justify-content-between">
-            <h4 class="text-center">OSAS</h4>
-            <a href="#" class="toggle-sidebar menu-icon" onclick="toggleSidebar()">
-                <i class="fas fa-step-backward text-white"></i>
-            </a>
-        </div>
-        {% include "macros.html" %}
-    </div>
-
-    <!-- Main Content -->
-    <div class="col-10 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out;overflow: hidden;">
-        {% include "header.html" %}
-
-            <iframe id="echarts" src="{{ selected_route }}" width="100%" height="100%" style="border: none;"></iframe>
-
-    </div>
-</div>
-
+  <div class="flex-grow-1 overflow-hidden">
+    {% if selected_route == '/dashboard' %}
+      <iframe id="dash_board" src="/dashboard" width="100%" height="100%" style="border: none;"></iframe>
+    {% elif selected_route == '/userprofile' %}
+      <iframe id="user_profile" src="/user_profile" width="100%" height="100%" style="border: none;"></iframe>
+    {% elif selected_route.startswith('/echarts/') %}
+      <iframe id="echarts" src="{{ selected_route }}" width="100%" height="100%" style="border: none;"></iframe>
+    {% else %}
+      <iframe id="dash_board" src="/dashboard" width="100%" height="100%" style="border: none;"></iframe>
+    {% endif %}
+  </div>
 {% endblock %}

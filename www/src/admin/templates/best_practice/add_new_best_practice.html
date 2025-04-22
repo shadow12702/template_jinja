@@ -1,29 +1,9 @@
-{% extends 'base.html' %}
-
-{% block title %}
-  Add New Best Practice
-{% endblock %}
-
-{% block content %}
+{% include 'link.html' %}
   <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/best_practice/add_bp.css') }}" />
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-2 sidebar" id="sidebar">
-      <div class="d-flex align-items-center p-3 justify-content-between">
-        <h4 class="text-center">OSAS</h4>
-        <a href="#" class="toggle-sidebar menu-icon" onclick="toggleSidebar()"><i class="fas fa-step-backward text-white"></i></a>
-      </div>
-      {% include 'macros.html' %}
-    </div>
-
+  <div class="w-100">
     <!-- Main Content -->
-    <div class="col-10 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
-      {% include 'header.html' %}
-
+    <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
       <!-- Include Font Awesome for icons -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-      <div class="container">
         <div class="page-header d-flex justify-content-between align-items-center">
           <div>
             <h1>Add New Best Practice</h1>
@@ -49,28 +29,28 @@
 
                   <div class="row">
                     <div class="col-md-6 mb-3">
-                      <label for="BPDbVersion" class="form-label">DB Version <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="BPDbVersion" name="BPDbVersion" placeholder="e.g., 19c" required />
+                      <label for="db_version" class="form-label">DB Version <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="db_version" name="db_version" placeholder="e.g., 19c" required />
+                    </div>  
+
+                    <div class="col-md-6 mb-3">
+                      <label for="parameter" class="form-label">Parameter <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="parameter" name="parameter" placeholder="e.g., optimizer_mode" required />
                     </div>
 
                     <div class="col-md-6 mb-3">
-                      <label for="BPParameter" class="form-label">Parameter <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="BPParameter" name="BPParameter" placeholder="e.g., optimizer_mode" required />
+                      <label for="param_default_value" class="form-label">Default Value <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="param_default_value" name="param_default_value" placeholder="e.g., ALL_ROWS" required />
                     </div>
 
                     <div class="col-md-6 mb-3">
-                      <label for="BPParamDefaultValue" class="form-label">Default Value <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="BPParamDefaultValue" name="BPParamDefaultValue" placeholder="e.g., ALL_ROWS" required />
+                      <label for="param_recommend_value" class="form-label">Recommended Value <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="param_recommend_value" name="param_recommend_value" placeholder="e.g., CHOOSE" required />
                     </div>
 
                     <div class="col-md-6 mb-3">
-                      <label for="BPParamRecommendValue" class="form-label">Recommended Value <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="BPParamRecommendValue" name="BPParamRecommendValue" placeholder="e.g., CHOOSE" required />
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                      <label for="BPForRacOnly" class="form-label">For RAC Only <span class="text-danger">*</span></label>
-                      <select class="form-select" id="BPForRacOnly" name="BPForRacOnly" required>
+                      <label for="param_recommend_value" class="form-label">For RAC Only <span class="text-danger">*</span></label>
+                      <select class="form-select" id="param_recommend_value" name="param_recommend_value" required>
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                       </select>
@@ -79,8 +59,8 @@
 
                   <!-- Full width Notes field -->
                   <div class="mb-3">
-                    <label for="BPNotes" class="form-label">Notes</label>
-                    <textarea class="form-control" id="BPNotes" name="BPNotes" rows="4" placeholder="e.g., Meaning: Removes unused space"></textarea>
+                    <label for="notes" class="form-label">Notes</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="4" placeholder="e.g., Meaning: Removes unused space"></textarea>
                   </div>
 
                   <div class="text-end mt-4">
@@ -94,10 +74,8 @@
         </div>
       </div>
     </div>
-  </div>
 
   {% block scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   {% endblock %}
-{% endblock %}

@@ -66,14 +66,13 @@ def add_best_practice():
 
 @best_practice_route.route("/add_new_best_practice", methods=["GET", "POST"])
 def add_new_best_practice():
-    test = request.form.get("BPDbVersion")
     best_practice_request = BestPracticeRequest(
-        BPDbVersion=request.form.get("BPDbVersion"),
-        BPParameter=request.form.get("BPParameter"),
-        BPParamDefaultValue=request.form.get("BPParamDefaultValue"),
-        BPParamRecommendValue=request.form.get("BPParamRecommendValue"),
-        BPForRacOnly=request.form.get("BPForRacOnly"),
-        BPNotes=request.form.get("BPNotes")
+        db_version=request.form.get("db_version"),
+        parameter=request.form.get("parameter"),
+        param_default_value=request.form.get("param_default_value"),
+        param_recommend_value=request.form.get("param_recommend_value"),
+        for_rac_only=request.form.get("for_rac_only"),
+        notes=request.form.get("notes")
     )
     response = add_best_practice_action(best_practice_request)
     
@@ -94,12 +93,12 @@ def detail_best_practice(id):
 @best_practice_route.route("/update_info_best_practice/<id>", methods=["GET", "POST"])
 def update_best_practice(id):
         best_practice_request = BestPracticeRequest(
-            BPDbVersion=request.form.get("BPDbVersion"),
-            BPParameter=request.form.get("BPParameter"),
-            BPParamDefaultValue=request.form.get("BPParamDefaultValue"),
-            BPParamRecommendValue=request.form.get("BPParamRecommendValue"),
-            BPForRacOnly=request.form.get("BPForRacOnly"),
-            BPNotes=request.form.get("BPNotes")
+            db_version=request.form.get("db_version"),
+            parameter=request.form.get("parameter"),
+            param_default_value=request.form.get("param_default_value"),
+            param_recommend_value=request.form.get("param_recommend_value"),
+            for_rac_only=request.form.get("for_rac_only"),
+            notes=request.form.get("notes")
         )
         response = update_best_practice_action(id, best_practice_request)
        

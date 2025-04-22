@@ -1,10 +1,11 @@
+from typing import Optional
 from pydantic import BaseModel
 from datetime import datetime
 
 class ConfigResponse(BaseModel):
-    Type : str
-    Key : str
-    Value: str
-    IsLocked: int
-    CreatedOn : datetime
-    LastChanged : datetime
+    type: str
+    key: str
+    value: str
+    is_locked: int
+    created_on: datetime
+    last_changed: datetime

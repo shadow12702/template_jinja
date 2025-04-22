@@ -1,87 +1,87 @@
-from flask import Blueprint, render_template, session, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, session, url_for
 from src.admin.models.model_response import PatchResponse
-from src.admin.presentation.service import ApiService
+from src.admin.models.model_request import PatchRequest
 from src.apps.models.responses.user_model import UserModel
 from src.core.request import RequestHandler
 import os
 
+# Thiết lập thư mục template
 current_dir = os.path.dirname(os.path.abspath(__file__))
 template_dir = os.path.join(os.path.dirname(os.path.dirname(current_dir)), 'templates', 'patches')
 
 patch_route = Blueprint('patch_route', __name__, template_folder=template_dir)
 
-def get_patches():
-    response = RequestHandler.post("/patch/get-patch", headers={"Content-Type": "application/json"})
-    if response.status_code == 200:
-        patches = response.json() or []
-        return patches
-    return []
-
+# Hàm lấy dữ liệu người dùng từ session
 def get_user_data():
     user_data = session.get('user')
     user = UserModel(**user_data) if user_data else None
     return user
 
-@patch_route.route("/patch")
-def patches_management():
-    user = get_user_data()
-    menu = ApiService.get_menu(1)
-    
-    try:
-        patches = get_patches()
-    except Exception as e:
-        print(f"Error fetching patches: {e}")
-        patches = []
+# Hàm gọi API để lấy danh sách patch
+def get_patches():
+    response = RequestHandler.post("/patch/get-patch", headers={"Content-Type": "application/json"})
+    if response.status_code == 200:
+        patches = [PatchResponse(**item) for item in response.json()]
+        return patches
+    return []
 
-    return render_template('patches_management.html', 
-                          user=user, 
-                          menu=menu, 
-                          patches=patches)
-
-def add_patch_action(DbVersion: str, Type: str, Format: str, PatchRoot: int, PatchID: int, PatchType: str, FixedInRU: str, FixedInMRP: str, Description: str):
-    data = {
-        "DbVersion": DbVersion,
-        "Type": Type,
-        "Format": Format,
-        "PatchRoot": PatchRoot,
-        "PatchID": PatchID,
-        "PatchType": PatchType,
-        "FixedInRU": FixedInRU,
-        "FixedInMRP": FixedInMRP,
-        "Description": Description
-    }
+# Hàm gọi API để thêm patch
+def add_patch_action(patch_request: PatchRequest):
+    data = patch_request.dict()
     response = RequestHandler.post("/patch/add", data=data, headers={"Content-Type": "application/json"})
     return response
 
+# Hàm gọi API để cập nhật patch
+def edit_patch_action(patch_request: PatchRequest):
+    data = patch_request.dict()
+    response = RequestHandler.post("/patch/update", data=data, headers={"Content-Type": "application/json"})
+    return response
+
+# Route chính quản lý patch
+@patch_route.route("/db-patch")
+def patches_management():
+    patches = get_patches()
+    return render_template("patches_management.html", patches=patches, user=get_user_data())
+
+# Route hiển thị form thêm patch
+@patch_route.route("/add_patch")
+def add_patch():
+    return render_template("add_patches.html", user=get_user_data())
+
+# Route xử lý thêm patch
 @patch_route.route("/add_new_patch", methods=["GET", "POST"])
 def add_new_patch():
     if request.method == "POST":
-        DbVersion = request.form.get("DbVersion", "").strip() 
-        Type = request.form.get("Type", "").strip()
-        Format = request.form.get("Format", "").strip()
-        PatchRoot = int(request.form.get("PatchRoot", 0))
-        PatchID = int(request.form.get("PatchID", 0))
-        PatchType = request.form.get("PatchType", "").strip()
-        FixedInRU = request.form.get("FixedInRU", "").strip()
-        FixedInMRP = request.form.get("FixedInMRP", "NOT APPLICABLE").strip()
-        Description = request.form.get("Description", "").strip()
+        form = request.form
 
+        patch_request = PatchRequest(
+            id=int(form.get("id", 0)),
+            root=int(form.get("root", 0)),
+            db_version=form.get("db_version", ""),
+            type=form.get("type", ""),
+            format=form.get("format", ""),
+            patch_type=form.get("patch_type", ""),
+            fixed_in_ru=form.get("fixed_in_ru", ""),
+            fixed_in_mrp=form.get("fixed_in_mrp", "NOT APPLICABLE"),
+            description=form.get("description", "")
+        )
+
+        # Kiểm tra các trường bắt buộc
         required_fields = {
-            "DbVersion": DbVersion,
-            "Type": Type,
-            "Format": Format,
-            "PatchType": PatchType,
-            "FixedInRU": FixedInRU,
-            "FixedInMRP": FixedInMRP,
-            "Description": Description
+            "db_version": patch_request.db_version,
+            "type": patch_request.type,
+            "format": patch_request.format,
+            "patch_type": patch_request.patch_type,
+            "fixed_in_ru": patch_request.fixed_in_ru,
+            "description": patch_request.description
         }
-        
+
         empty_fields = [field for field, value in required_fields.items() if not value]
         if empty_fields:
             error = f"Vui lòng điền đầy đủ các trường: {', '.join(empty_fields)}"
             return render_template("add_patches.html", user=get_user_data(), error=error)
 
-        response = add_patch_action(DbVersion, Type, Format, PatchRoot, PatchID, PatchType, FixedInRU, FixedInMRP, Description)
+        response = add_patch_action(patch_request)
 
         if response.status_code == 200:
             return redirect(url_for("admin_route.patch_route.patches_management"))
@@ -89,19 +89,3 @@ def add_new_patch():
             return render_template("add_patches.html", user=get_user_data(), error=f"Lỗi khi thêm patch: {response.text}")
 
     return render_template("add_patches.html", user=get_user_data())
-
-def edit_patch_action(DbVersion: str, Type: str, Format: str, PatchRoot: int, PatchID: int, PatchType: str, FixedInRU: str, FixedInMRP: str, Description: str):
-    data = {
-        "DbVersion": DbVersion,
-        "Type": Type,
-        "Format": Format,
-        "PatchRoot": PatchRoot,
-        "PatchID": PatchID,
-        "PatchType": PatchType,
-        "FixedInRU": FixedInRU,
-        "FixedInMRP": FixedInMRP,
-        "Description": Description
-    }
-    response = RequestHandler.post("/patch/update", data=data, headers={"Content-Type": "application/json"})
-    return response
-

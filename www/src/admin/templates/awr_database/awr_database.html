@@ -1,132 +1,113 @@
-{% extends "base.html" %}
-
-{% block title %}AWR Database Management{% endblock %}
-
-{% block content %}
-<div class="row">
-    
-    <!-- <div class="col-2 sidebar" id="sidebar">
-        <div class="d-flex align-items-center p-3 justify-content-between">
-            <h4 class="text-center">OSAS</h4>
-            <a href="#" class="toggle-sidebar menu-icon" onclick="toggleSidebar()">
-                <i class="fas fa-step-backward text-white"></i>
-            </a>
-        </div>
-        {% include "macros_admin.html" %}
-    </div> -->
-
+<div class="w-100">
     <!-- Main Content -->
-    <div class="col-10 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out;overflow: hidden;">
+    <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out;overflow: hidden;">
         {% include "header.html" %}
-        
+
         <!-- Include Font Awesome for icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/awr_database/awr_database.css') }}">
-        
-        <div class="container">
-            <div class="page-header">
-                <h1>AWR Database Management</h1>
-                <p>Monitor and manage database performance with Automatic Workload Repository</p>
-            </div>
-        
-            <!-- Filter and search -->
-            <div class="filter-section">
-                <div class="filter-dropdown">
-                    <button class="dropdown-btn">Performance <i class="fas fa-chevron-down"></i></button>
-                    <div class="dropdown-menu" data-filter="performance">
-                        <a class="dropdown-item" href="#" data-value="all">All States</a>
-                        <a class="dropdown-item" href="#" data-value="optimal">Optimal</a>
-                        <a class="dropdown-item" href="#" data-value="warning">Warning</a>
-                        <a class="dropdown-item" href="#" data-value="critical">Critical</a>
-                    </div>
-                </div>
-                
-                <div class="filter-dropdown">
-                    <button class="dropdown-btn">Version <i class="fas fa-chevron-down"></i></button>
-                    <div class="dropdown-menu" data-filter="version">
-                        <a class="dropdown-item" href="#" data-value="all">All Versions</a>
-                        <a class="dropdown-item" href="#" data-value="1.0">1.0</a>
-                        <a class="dropdown-item" href="#" data-value="1.5">1.5</a>
-                        <a class="dropdown-item" href="#" data-value="2.0">2.0</a>
-                    </div>
-                </div>
-                
-                <div class="search-box">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" placeholder="Search databases..." aria-label="Search databases">
-                </div>
-            </div>
-        
-            <!-- Database table -->
-            <div class="table-container">
-                <table class="db-table">
-                    <thead>
-                        <tr>
-                            <th class="checkbox-col"><input type="checkbox" class="select-all"></th>
-                            <th data-sortable="true" data-column="cusCode">Customer Code</th>
-                            <th data-sortable="true" data-column="version">Version</th>
-                            <th data-sortable="true" data-column="dbName">Database Name</th>
-                            <th data-sortable="true" data-column="cdb">CDB</th>
-                            <th data-sortable="true" data-column="cdbDbid">CDB DBID</th>
-                            <th data-sortable="true" data-column="pdbDbid">PDB DBID</th>
-                            <th data-sortable="true" data-column="pdbName">PDB Name</th>
-                            <th data-sortable="true" data-column="minSnap">Min Snap</th>
-                            <th data-sortable="true" data-column="minTime">Min Time</th>
-                            <th data-sortable="true" data-column="lastSnap">Last Snap</th>
-                            <th data-sortable="true" data-column="maxTime">Max Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for user in users %}
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>{{ user['cus_code'] }}</td>
-                            <td>{{ user['version'] if user['version'] else '' }}</td>
-                            <td>{{ user['db_name'] if user['db_name'] else '' }}</td>
-                            <td>{{ user['cdb'] if user['cdb'] else '' }}</td>
-                            <td>{{ user['cdb_dbid'] if user['cdb_dbid'] is not none else '' }}</td>
-                            <td>{{ user['pdb_dbid'] if user['pdb_dbid'] is not none else '' }}</td>
-                            <td>
-                                <div class="user-details">
-                                    <div class="user-name">{{ user['pdb_name'] if user['pdb_name'] else '' }}</div>
-                                </div>
-                            </td>
-                            <td>{{ user['min_snap'] if user['min_snap'] is not none else '' }}</td>
-                            <td>{{ user['min_time'] if user['min_time'] else '' }}</td>
-                            <td>{{ user['max_snap'] if user['max_snap'] is not none else '' }}</td>
-                            <td>{{ user['max_time'] if user['max_time'] else '' }}</td>
-                        </tr>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Pagination -->
-            <div class="pagination">
-                <div class="pagination-info">
-                    <span>Rows per page:</span>
-                    <select>
-                        <option>5</option>
-                        <option selected>10</option>
-                        <option>20</option>
-                    </select>
-                    <span>Showing 1-{{ users|length }} of {{ users|length }}</span>
-                </div>
-                <div class="pagination-controls">
-                    <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
-                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
-            
-            <!-- Performance metrics section (initially hidden) -->
-            <!-- This will be populated dynamically via JavaScript -->
+
+        <div class="page-header">
+            <h1>AWR Database Management</h1>
+            <p>Monitor and manage database performance with Automatic Workload Repository</p>
         </div>
+
+        <!-- Filter and search -->
+        <div class="filter-section">
+            <div class="filter-dropdown">
+                <button class="dropdown-btn">Performance <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-menu" data-filter="performance">
+                    <a class="dropdown-item" href="#" data-value="all">All States</a>
+                    <a class="dropdown-item" href="#" data-value="optimal">Optimal</a>
+                    <a class="dropdown-item" href="#" data-value="warning">Warning</a>
+                    <a class="dropdown-item" href="#" data-value="critical">Critical</a>
+                </div>
+            </div>
+
+            <div class="filter-dropdown">
+                <button class="dropdown-btn">Version <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-menu" data-filter="version">
+                    <a class="dropdown-item" href="#" data-value="all">All Versions</a>
+                    <a class="dropdown-item" href="#" data-value="1.0">1.0</a>
+                    <a class="dropdown-item" href="#" data-value="1.5">1.5</a>
+                    <a class="dropdown-item" href="#" data-value="2.0">2.0</a>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" placeholder="Search databases..." aria-label="Search databases">
+            </div>
+        </div>
+
+        <!-- Database table -->
+        <div class="table-container">
+            <table class="db-table">
+                <thead>
+                    <tr>
+                        <th class="checkbox-col"><input type="checkbox" class="select-all"></th>
+                        <th data-sortable="true" data-column="cusCode">Customer Code</th>
+                        <th data-sortable="true" data-column="version">Version</th>
+                        <th data-sortable="true" data-column="dbName">Database Name</th>
+                        <th data-sortable="true" data-column="cdb">CDB</th>
+                        <th data-sortable="true" data-column="cdbDbid">CDB DBID</th>
+                        <th data-sortable="true" data-column="pdbDbid">PDB DBID</th>
+                        <th data-sortable="true" data-column="pdbName">PDB Name</th>
+                        <th data-sortable="true" data-column="minSnap">Min Snap</th>
+                        <th data-sortable="true" data-column="minTime">Min Time</th>
+                        <th data-sortable="true" data-column="lastSnap">Last Snap</th>
+                        <th data-sortable="true" data-column="maxTime">Max Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>{{ user['cus_code'] }}</td>
+                        <td>{{ user['version'] if user['version'] else '' }}</td>
+                        <td>{{ user['db_name'] if user['db_name'] else '' }}</td>
+                        <td>{{ user['cdb'] if user['cdb'] else '' }}</td>
+                        <td>{{ user['cdb_dbid'] if user['cdb_dbid'] is not none else '' }}</td>
+                        <td>{{ user['pdb_dbid'] if user['pdb_dbid'] is not none else '' }}</td>
+                        <td>
+                            <div class="user-details">
+                                <div class="user-name">{{ user['pdb_name'] if user['pdb_name'] else '' }}</div>
+                            </div>
+                        </td>
+                        <td>{{ user['min_snap'] if user['min_snap'] is not none else '' }}</td>
+                        <td>{{ user['min_time'] if user['min_time'] else '' }}</td>
+                        <td>{{ user['max_snap'] if user['max_snap'] is not none else '' }}</td>
+                        <td>{{ user['max_time'] if user['max_time'] else '' }}</td>
+                    </tr>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <div class="pagination-info">
+                <span>Rows per page:</span>
+                <select>
+                    <option>5</option>
+                    <option selected>10</option>
+                    <option>20</option>
+                </select>
+                <span>Showing 1-{{ users|length }} of {{ users|length }}</span>
+            </div>
+            <div class="pagination-controls">
+                <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Performance metrics section (initially hidden) -->
+        <!-- This will be populated dynamically via JavaScript -->
     </div>
 </div>
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{ url_for('static', filename='admin/js/awr/awr_database.js') }}"></script>
-{% endblock %}
 {% endblock %}

@@ -10,7 +10,7 @@ template_dir = os.path.join(os.path.dirname(os.path.dirname(current_dir)), 'temp
 
 awr_route = Blueprint('awr_route', __name__, template_folder=template_dir)
 
-@awr_route.route("/awr")
+@awr_route.route("/awr-db")
 def awr():
     user_data = session.get('user')
     menu = []
@@ -29,7 +29,6 @@ def awr():
             
             return render_template("awr_database.html", 
                                     user=user, 
-                                    menu=menu, 
                                     customers=customers, 
                                     db_repo_info=db_repo_info)
         

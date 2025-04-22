@@ -30,13 +30,11 @@ class ApiService:
         if response.status_code == 200:
             return [CustomerResponse(**item) for item in response.json()]
         return []
-    
     @staticmethod
     def admin_required():
         ath = session['user']["IsAdmin"]
         if ath == True : return 1 
         else : return 0  
-    
     @staticmethod
     def get_db_repo_info(customer_code: str):
         # Gọi API để lấy danh sách khách hàng

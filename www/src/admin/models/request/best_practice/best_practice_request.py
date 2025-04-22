@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 
 class BestPracticeRequest(BaseModel):
-    BPDbVersion: str
-    BPParameter: str
-    BPParamDefaultValue: str
-    BPParamRecommendValue: str
-    BPForRacOnly: int
-    BPNotes: str = None
+    db_version: str
+    parameter: str
+    param_default_value: str
+    param_recommend_value: str
+    for_rac_only: int
+    notes: str = None

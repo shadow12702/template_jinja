@@ -1,161 +1,460 @@
-nav.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background-color: #fff;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 0;
-  padding-bottom: 10px;
-  height: 56px; /* Chiều cao cố định cho đồng bộ */
+/* Modern Berry-Style Header CSS */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    padding: 0.75rem 1.5rem;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-nav .container-fluid > * {
-  margin-left: 10px;
+/* Container to align header content */
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
 }
 
-nav .fa {
-  cursor: pointer;
+/* Left section with toggle and app brand */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-nav img {
-  cursor: pointer;
+/* App brand/logo styling */
+.app-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #006400;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
 }
 
-/* Sidebar sát với header */
-.sidebar {
-  margin-top: 0;
-  padding-top: 0;
+.app-brand i {
+    color: #006400;
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
 }
 
-/* Tên trang web */
-.website-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #343a40;
+/* Sidebar toggle button */
+.sidebar-toggle-btn {
+    background-color: rgba(0, 100, 0, 0.08);
+    border: none;
+    color: #006400;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-/* Responsive adjustments for mobile */
+.sidebar-toggle-btn:hover {
+    background-color: rgba(0, 100, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.sidebar-toggle-btn:active {
+    transform: translateY(0);
+}
+
+.sidebar-toggle-btn i {
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+/* Search bar section */
+.navbar-search {
+    flex: 1;
+    max-width: 600px;
+    margin: 0 2rem;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    border: none;
+    background-color: #f5f6fa;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #555;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    background-color: #f0f1f8;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 100, 0, 0.05);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 1rem;
+}
+
+.search-controls {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-controls button {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-controls button:hover {
+    color: #006400;
+}
+
+/* Right section with actions and user profile */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Action buttons */
+.action-btn {
+    background-color: #f5f6fa;
+    border: none;
+    color: #666;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.action-btn:hover {
+    background-color: #f0f1f8;
+    color: #006400;
+    transform: translateY(-2px);
+}
+
+.action-btn.has-indicator:after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background-color: #dc3545;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+}
+
+/* Customer dropdown styling */
+.dropdown .btn-customer {
+    background-color: #f5f6fa;
+    border: none;
+    color: #555;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.dropdown .btn-customer:hover {
+    background-color: #f0f1f8;
+    color: #006400;
+}
+
+.dropdown .btn-customer i {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Enhanced dropdown menus */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 0.75rem 0;
+    margin-top: 0.5rem;
+    animation: fadeInDown 0.2s ease;
+    width: 220px;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-header {
+    padding: 0.75rem 1.25rem;
+    font-weight: 600;
+    color: #444;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 0.5rem;
+}
+
+.dropdown-item {
+    padding: 0.6rem 1.25rem;
+    color: #555;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.dropdown-item i {
+    color: #888;
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(0, 100, 0, 0.05);
+    color: #006400;
+}
+
+.dropdown-item:hover i {
+    color: #006400;
+}
+
+.dropdown-divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin: 0.5rem 0;
+}
+
+/* User profile */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.user-profile:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    object-fit: cover;
+    transition: all 0.2s ease;
+}
+
+.user-info {
+    display: none;
+}
+
+/* Full-width user dropdown for medium to large screens */
+@media (min-width: 992px) {
+    .user-profile {
+        background-color: #f5f6fa;
+        padding: 0.4rem 0.4rem 0.4rem 0.4rem;
+    }
+    
+    .user-info {
+        display: block;
+    }
+    
+    .user-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #444;
+        margin: 0;
+        line-height: 1.2;
+    }
+    
+    .user-role {
+        font-size: 0.8rem;
+        color: #888;
+        margin: 0;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .navbar-search {
+        max-width: 400px;
+        margin: 0 1rem;
+    }
+}
+
 @media (max-width: 768px) {
-  nav.navbar {
-      height: auto; /* Cho phép chiều cao tự điều chỉnh trên mobile */
-      padding: 10px 15px; /* Giảm padding */
-  }
-
-  /* Ẩn các phần tử trong container-fluid, trừ tên trang web */
-  .navbar .container-fluid .header-actions {
-      display: none;
-  }
-
-  /* Chỉ giữ tên trang web hiển thị */
-  .website-name {
-      font-size: 1.2rem; /* Giảm kích thước chữ trên mobile */
-      margin: 0;
-  }
+    .navbar {
+        padding: 0.75rem 1rem;
+    }
+    
+    .navbar-search {
+        display: none;
+    }
+    
+    .app-brand span {
+        display: none;
+    }
 }
-/* Dropdown ẩn mặc định */
-.dropdown-menu-custom {
-  display: none;
-  position: absolute;
-  top: 45px;
-  right: 0;
-  width: 250px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  z-index: 1000;
-}
-
-/* Avatar */
+/* Avatar styles */
 .avatar {
-  cursor: pointer;
-  border: 2px solid #ddd;
-  transition: transform 0.2s ease, border-color 0.3s ease;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .avatar:hover {
-  transform: scale(1.05);
-  border-color: #007bff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Dropdown menu */
 .dropdown-menu-custom {
-  display: none;
-  position: absolute;
-  top: 48px;
-  right: 0;
-  width: 280px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  z-index: 1000;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.8s ease;
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    width: 280px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow: hidden;
+    animation: fadeIn 0.25s ease;
 }
 
-/* Khi menu được bật */
 .dropdown-menu-custom.show {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
+    display: block;
 }
 
-/* User info */
-.dropdown-menu-custom .user-info {
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-  padding: 16px;
-  text-align: center;
+.user-info {
+    background-color: #f8f9fa;
+    padding: 20px 15px;
+    text-align: center;
+    border-bottom: 1px solid #f1f1f1;
 }
 
-.dropdown-menu-custom .user-info h6 {
-  margin-bottom: 4px;
-  font-weight: 600;
+.user-info img {
+    width: 70px;
+    height: 70px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-menu-custom .user-info p {
-  margin-bottom: 0;
-  font-size: 0.85rem;
-  color: #666;
+.user-info h6 {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #343a40;
+    font-size: 16px;
 }
 
-/* Menu items */
-.dropdown-menu-custom ul {
-  list-style: none;
-  margin: 0;
-  padding: 8px 0;
+.user-info p {
+    margin-bottom: 0;
+    font-size: 14px;
+    color: #6c757d;
 }
 
-.dropdown-menu-custom ul li {
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  color: #333;
-  display: flex;
-  align-items: center;
-  transition: background 0.2s ease;
+.dropdown-menu-custom ul li a {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #343a40;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 4px 8px;
 }
 
-.dropdown-menu-custom ul li i {
-  margin-right: 10px;
-  color: #6c757d;
-  width: 20px;
-  text-align: center;
+.dropdown-menu-custom ul li a:hover {
+    background-color: rgba(0, 160, 0, 0.08);
+    color: #00a000;
 }
 
-.dropdown-menu-custom ul li:hover {
-  background-color: #f0f0f0;
+.dropdown-menu-custom ul li a i {
+    color: #00a000;
+    font-size: 16px;
 }
 
-/* Badge */
-.dropdown-menu-custom .badge {
-  font-size: 0.75rem;
-  padding: 2px 6px;
+.dropdown-menu-custom .btn-outline-danger {
+    border-radius: 10px;
+    padding: 10px 0;
+    margin: 8px 12px;
+    width: calc(100% - 24px);
+    border: 1px solid #dc3545;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
-/* Logout button */
-.dropdown-menu-custom .btn {
-  border-radius: 8px;
-  font-weight: 500;
+.dropdown-menu-custom .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
 }
 
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 16px;
+    }
+    
+    .app-brand {
+        font-size: 1.3rem;
+    }
+    
+    .sidebar-toggle-btn {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .dropdown .btn-outline-secondary {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .dropdown-menu-custom {
+        width: 260px;
+    }
+}

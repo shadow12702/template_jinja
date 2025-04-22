@@ -29,17 +29,17 @@ def get_customer_by_code(code):
 def add_customer_action(CustomerRequest : CustomerRequest):
     
     data = {
-        "Code": CustomerRequest.Code,
-        "Name" : CustomerRequest.Name,
+        "code": CustomerRequest.code,
+        "name" : CustomerRequest.name,
     }
     response = RequestHandler.post(f"/customer/add" , data=data ,headers={"Content-Type": "application/json"})
     return response
 
-def update_customer_action(Code , UpdateCustomerRequest : UpdateCustomerRequest):
+def update_customer_action(code , UpdateCustomerRequest : UpdateCustomerRequest):
     data = {
-        "Name" : UpdateCustomerRequest.Name,
+        "name" : UpdateCustomerRequest.name,
     }
-    response = RequestHandler.put(f"/customer/update/{Code}" , data=data ,headers={"Content-Type": "application/json"})
+    response = RequestHandler.put(f"/customer/update/{code}" , data=data ,headers={"Content-Type": "application/json"})
     return response
 
 def get_user_data():
@@ -63,33 +63,33 @@ def add_customer():
 # @admin_required
 def add_new_customer():
     
-    Name = request.form.get("Name")
+    name = request.form.get("name")
     
-    Code = CustomerRequest(Code = request.form.get("Code"))
-    Name = CustomerRequest(Name = request.form.get("Name"))
+    code = CustomerRequest(code = request.form.get("code"))
+    name = CustomerRequest(name = request.form.get("name"))
    
-    response = add_customer_action(Code, Name)
+    response = add_customer_action(code, name)
    
     if response.status_code == 200:
         return redirect(request.referrer or url_for("customer_route.customer_management"))
     else:
         return render_template("add_new_customer.html", user=get_user_data(), error=f"Lỗi khi thêm khách hàng: {response.text}")
     
-@customer_route.route("/detail_customer/<Code>")
-def detail_customer(Code):
-    customer = get_customer_by_code(Code)
+@customer_route.route("/detail_customer/<code>")
+def detail_customer(code):
+    customer = get_customer_by_code(code)
     return render_template("detail_customer.html", customer=customer, user=get_user_data())
 
-@customer_route.route("/update_info_customer/<Code>", methods=["GET","POST"])
+@customer_route.route("/update_info_customer/<code>", methods=["GET","POST"])
 # @admin_required
-def update_customer(Code):
-    Code = request.form.get("Code")
-    Name = UpdateCustomerRequest(Name=request.form.get("Name"))
+def update_customer(code):
+    code = request.form.get("code")
+    name = UpdateCustomerRequest(name=request.form.get("name"))
     
-    response = update_customer_action(Code, Name)
+    response = update_customer_action(code, name)
    
     if response.status_code == 200:
         return redirect(url_for("admin_route.customer_route.customer_management"))
     else:
-        customer = get_customer_by_code(Code)
+        customer = get_customer_by_code(code)
         return render_template("detail_customer.html", customer = customer , user=get_user_data(), error=f"Lỗi khi thêm khách hàng: {response.text}")
