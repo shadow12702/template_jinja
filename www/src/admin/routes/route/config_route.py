@@ -14,7 +14,7 @@ def get_user_data():
     return UserModel(**user_data) if user_data else None
 
 def get_all_configs():
-    response = RequestHandler.post("/config/get-config", headers={"Content-Type": "application/json"})
+    response = RequestHandler.post("/config/get-all", headers={"Content-Type": "application/json"})
     if response.status_code == 200:
         return [ConfigResponse(**item) for item in response.json()]
     return []

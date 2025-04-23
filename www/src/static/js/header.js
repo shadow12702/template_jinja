@@ -1,109 +1,98 @@
-        // Toggle user dropdown
-        function toggleUserDropdown() {
-            document.getElementById("userDropdown").classList.toggle("show");
+// User dropdown toggle
+function toggleUserDropdown() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('show');
+    
+    // Close when clicking outside
+    document.addEventListener('click', function(event) {
+        const isClickInside = document.querySelector('.user-dropdown').contains(event.target);
+        if (!isClickInside && dropdown.classList.contains('show')) {
+            dropdown.classList.remove('show');
         }
+    });
+}
 
-        // Toggle sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const contentArea = document.querySelector('.content-area');
-            const toggleBtn = document.getElementById('sidebarToggleBtn');
-            
-            sidebar.classList.toggle('collapsed');
-            contentArea.classList.toggle('expanded');
-            
-            if (sidebar.classList.contains('collapsed')) {
-                toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                localStorage.setItem('sidebarState', 'collapsed');
-            } else {
-                toggleBtn.innerHTML = '<i class="fas fa-times"></i>';
-                localStorage.setItem('sidebarState', 'expanded');
-            }
-        }
-
-        // Global variables
-        let selectedCustomer = null;
-        let selectedCustomerCode = null;
-        let selectedDatabase = null;
-        let selectedDatabaseCode = null;
-
-        // Initialize on document load
-        document.addEventListener("DOMContentLoaded", function () {
-            // Apply saved sidebar state
-            const sidebar = document.getElementById('sidebar');
-            const contentArea = document.querySelector('.content-area');
-            const toggleBtn = document.getElementById('sidebarToggleBtn');
-            const savedState = localStorage.getItem('sidebarState');
-            
-            if (savedState === 'collapsed') {
-                sidebar.classList.add('collapsed');
-                contentArea.classList.add('expanded');
-                toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            } else {
-                toggleBtn.innerHTML = '<i class="fas fa-times"></i>';
-            }
+// Sidebar toggle functionality
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar') || document.querySelector('.sidebar');
+    const mainContent = document.getElementById('mainContent') || document.querySelector('.main-content');
+    
+    if (sidebar) {
+        sidebar.classList.toggle('collapsed');
         
-            // Set up customer selection
-            const customerButtons = document.querySelectorAll(".customer-select-btn");
-            customerButtons.forEach((button) => {
-                button.addEventListener("click", function () {
-                    selectCustomer(
-                        this.getAttribute("data-cus-name"),
-                        this.value
-                    );
-                });
-            });
+        if (mainContent) {
+            mainContent.classList.toggle('expanded');
+        }
+    }
+}
 
-            // Set up database selection
-            const databaseButtons = document.querySelectorAll(".database-select-btn");
-            databaseButtons.forEach((button) => {
-                button.addEventListener("click", function () {
-                    selectDatabase(
-                        this.getAttribute("data-db-name"),
-                        this.value
-                    );
-                });
-            });
+// Customer selection functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Customer selection
+    const customerButtons = document.querySelectorAll('.customer-select-btn');
+    const customerDropdown = document.getElementById('customerDropdown');
+    const dbDropdownContainer = document.getElementById('databaseDropdownContainer');
+    
+    customerButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const cusCode = this.getAttribute('data-cus-code');
+            const cusName = this.getAttribute('data-cus-name');
+            
+            // Update dropdown button text
+            customerDropdown.textContent = cusName;
+            
+            // Show database dropdown
+            dbDropdownContainer.style.display = 'block';
+            
+            // Filter database options
+            filterDatabases(cusCode);
         });
-
-        // Customer selection handler
-        function selectCustomer(cusName, cusCode) {
-            selectedCustomer = cusName;
-            selectedCustomerCode = cusCode;
-            document.getElementById("customerDropdown").textContent = cusName;
-            document.getElementById("databaseDropdownContainer").style.display = "block";
+    });
+    
+    // Database selection
+    const databaseButtons = document.querySelectorAll('.database-select-btn');
+    const databaseDropdown = document.getElementById('databaseDropdown');
+    
+    databaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const dbName = this.getAttribute('data-db-name');
             
-            // Reset database selection
-            selectedDatabase = null;
-            selectedDatabaseCode = null;
-            document.getElementById("databaseDropdown").textContent = "Select Database";
-        }
-
-        // Database selection handler
-        function selectDatabase(dbName, cusCode) {
-            selectedDatabase = dbName;
-            selectedDatabaseCode = cusCode;
-            document.getElementById("databaseDropdown").textContent = dbName;
-        }
-
-        // Close dropdowns when clicking outside
-        window.addEventListener("click", function (event) {
-            // Close user dropdown
-            if (!event.target.matches('.avatar') && !event.target.closest('#userDropdown')) {
-                const userDropdown = document.getElementById('userDropdown');
-                if (userDropdown && userDropdown.classList.contains('show')) {
-                    userDropdown.classList.remove('show');
-                }
-            }
+            // Update dropdown button text
+            databaseDropdown.textContent = dbName;
             
-            // Close other dropdowns
-            if (!event.target.matches(".dropdown-toggle") && !event.target.matches(".dropdown-item")) {
-                const dropdowns = document.getElementsByClassName("dropdown-menu");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    const openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains("show")) {
-                        openDropdown.classList.remove("show");
-                    }
-                }
+            // Save selection to session storage for persistence
+            sessionStorage.setItem('selectedCustomer', customerDropdown.textContent);
+            sessionStorage.setItem('selectedDatabase', dbName);
+        });
+    });
+    
+    // Function to filter databases based on customer code
+    function filterDatabases(customerCode) {
+        const allDatabases = document.querySelectorAll('.database-select-btn');
+        
+        allDatabases.forEach(db => {
+            const dbCusCode = db.getAttribute('data-cus-code');
+            if (dbCusCode === customerCode) {
+                db.closest('li').style.display = 'block';
+            } else {
+                db.closest('li').style.display = 'none';
             }
         });
+        
+        // Reset database dropdown text
+        databaseDropdown.textContent = 'Select Database';
+    }
+    
+    // Restore selections from session storage
+    const savedCustomer = sessionStorage.getItem('selectedCustomer');
+    const savedDatabase = sessionStorage.getItem('selectedDatabase');
+    
+    if (savedCustomer) {
+        customerDropdown.textContent = savedCustomer;
+        dbDropdownContainer.style.display = 'block';
+    }
+    
+    if (savedDatabase) {
+        databaseDropdown.textContent = savedDatabase;
+    }
+});

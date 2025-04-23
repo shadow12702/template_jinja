@@ -348,3 +348,54 @@
 .dropdown-toggle::after {
 content: none;
 }
+/* Fix for centering sidebar icons in collapsed state */
+.sidebar.collapsed .nav-link.menu-link i,
+.sidebar.collapsed .menu-toggle i {
+    margin-right: 0;
+    margin-left: 0;
+    text-align: center;
+    width: 100%;
+    font-size: 1.4rem; /* Slightly larger icons for better visibility */
+}
+
+/* Ensure menu text is properly hidden in collapsed state */
+.sidebar.collapsed .menu-text,
+.sidebar.collapsed span:not(.dropdown-icon) {
+    display: none;
+    width: 0;
+    opacity: 0;
+}
+
+/* Ensure dropdown items and text are hidden when sidebar is collapsed */
+.sidebar.collapsed .submenu,
+.sidebar.collapsed .dropdown-toggle span,
+.sidebar.collapsed .menu-toggle span {
+    display: none !important;
+}
+
+/* Make sure submenus properly collapse when sidebar is collapsed */
+.sidebar.collapsed .submenu.show {
+    max-height: 0;
+    margin: 0;
+    padding: 0 !important;
+    overflow: hidden;
+    display: none !important;
+}
+
+/* Center icon position in collapsed state */
+.sidebar.collapsed .nav-item.menu-item {
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar.collapsed .nav-link.menu-link,
+.sidebar.collapsed .menu-toggle {
+    padding: 0.75rem 0;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Improve transition for collapsing submenu */
+.submenu {
+    transition: all 0.2s ease;
+}
