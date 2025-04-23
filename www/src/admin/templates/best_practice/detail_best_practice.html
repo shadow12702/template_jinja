@@ -5,8 +5,10 @@
     <!-- Main Content -->
     <div class="col-md-12 p-4">
         <h3>Edit Best Practice</h3>
-        <form method="POST" action="/update_info_best_practice/{{ best_practice[0].ID }}">
+        <form method="POST" action="/update_info_best_practice">
             <div class="mb-3">
+                <input type="text" style="display: none;" name="id" value="{{ best_practice[0].id }}">
+
                 <label for="db_version" class="form-label">DB Version</label>
                 <input type="text" class="form-control" id="db_version" name="db_version"
                     value="{{ best_practice[0].db_version }}" required>

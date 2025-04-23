@@ -343,3 +343,8 @@
         width: 100%;
     }
 }
+
+
+.dropdown-toggle::after {
+content: none;
+}

@@ -9,7 +9,7 @@ import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 template_dir = os.path.join(os.path.dirname(os.path.dirname(current_dir)), 'templates', 'customer')
-
+    
 customer_route = Blueprint('customer_route', __name__, template_folder=template_dir)
     
 def get_customer():
@@ -18,6 +18,7 @@ def get_customer():
         customers = [CustomerResponse(**item) for item in response.json()]
         return customers
     return []
+
 
 def get_customer_by_code(code):
     response = RequestHandler.get(f"/customer/show/{code}", headers={"Content-Type": "application/json"})

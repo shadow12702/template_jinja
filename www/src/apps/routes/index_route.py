@@ -35,14 +35,5 @@ def index():
         return redirect(url_for('auth_route.login'))
 
 
-@index_route.route("/profile")
-def profile():
-    user_data = session.get('user')
-    user = UserModel(**user_data) if user_data else None
-    if not user:
-        return redirect(url_for('auth_route.login'))
-    
-    # You can fetch additional user profile data from API if needed
-    # For now, we're just using the session data
-    return render_template("user/profile.html", Username=user.Username if user else "")
+
 

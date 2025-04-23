@@ -17,11 +17,6 @@
 
             <!-- Search -->
             <div class="filter-container">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" placeholder="Search patches by ID or type..." aria-label="Search patches">
-                </div>
-
                 <div class="dropdown">
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown">
                         <li><a class="dropdown-item" href="#">All Patches</a></li>
@@ -66,7 +61,7 @@
                             <td>{{ patch.fixed_in_mrp or '' }}</td>
                             <td>{{ patch.description or '' }}</td>
                             <td class="action-buttons">
-                                <a href="{{ url_for('admin_route.patch_route.add_patch') }}?patch_id={{ patch.id }}" class="btn-icon btn-edit" data-bs-toggle="tooltip" title="Edit Patch">
+                                <a href="{{ url_for('admin_route.patch_route.edit_patch', patch_id=patch.id) }}" class="btn-icon btn-edit" data-bs-toggle="tooltip" title="Edit Patch">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </td>

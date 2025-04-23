@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for
+from admin.models.request.patch.patch_update_request import PatchUpdateRequest
 from src.admin.models.model_response import PatchResponse
 from src.admin.models.model_request import PatchRequest
 from src.apps.models.responses.user_model import UserModel
@@ -25,6 +26,15 @@ def get_patches():
         return patches
     return []
 
+# Hàm gọi API để lấy thông tin một patch theo ID
+def get_patch_by_id(patch_id):
+    response = RequestHandler.post("/patch/get-patch", data={"id": patch_id}, headers={"Content-Type": "application/json"})
+    if response.status_code == 200 and response.json():
+        for item in response.json():
+            if item.get("id") == patch_id:
+                return PatchResponse(**item)
+    return None
+
 # Hàm gọi API để thêm patch
 def add_patch_action(patch_request: PatchRequest):
     data = patch_request.dict()
@@ -47,6 +57,24 @@ def patches_management():
 @patch_route.route("/add_patch")
 def add_patch():
     return render_template("add_patches.html", user=get_user_data())
+
+def update_patch_action(patch_id, patch_request: PatchRequest):
+    data = {
+        "root": patch_request.root,
+        "db_version": patch_request.db_version,
+        "type": patch_request.type,
+        "format": patch_request.format,
+        "patch_type": patch_request.patch_type,
+        "fixed_in_ru": patch_request.fixed_in_ru,
+        "fixed_in_mrp": patch_request.fixed_in_mrp,
+        "description": patch_request.description,
+    }
+    response = RequestHandler.put(
+        f"/patch/update/{patch_id}",
+        data=data,
+        headers={"Content-Type": "application/json"}
+    )
+    return response
 
 # Route xử lý thêm patch
 @patch_route.route("/add_new_patch", methods=["GET", "POST"])
@@ -89,3 +117,35 @@ def add_new_patch():
             return render_template("add_patches.html", user=get_user_data(), error=f"Lỗi khi thêm patch: {response.text}")
 
     return render_template("add_patches.html", user=get_user_data())
+
+# Route hiển thị form chỉnh sửa patch
+@patch_route.route("/edit_patch/<int:patch_id>")
+def edit_patch(patch_id):
+    patch = get_patch_by_id(patch_id)
+    if not patch:
+        return render_template("edit_patches.html", user=get_user_data(), error="Patch không tồn tại trong hệ thống")
+    return render_template("edit_patches.html", patch=patch, user=get_user_data())
+
+# Route xử lý cập nhật patch
+@patch_route.route("/edit_patch", methods=["POST"])
+def update_patch():
+    if request.method == "POST":
+        id=request.form.get("id")
+        patch_request = PatchUpdateRequest(
+            root=int(request.form.get("root")),
+            db_version=request.form.get("db_version", ""),
+            type=request.form.get("type", ""),
+            format=request.form.get("format", ""),
+            patch_type=request.form.get("patch_type", ""),
+            fixed_in_ru=request.form.get("fixed_in_ru", ""),
+            fixed_in_mrp=request.form.get("fixed_in_mrp", "NOT APPLICABLE"),
+            description=request.form.get("description", "")
+        )
+        response = update_patch_action( id ,patch_request)
+
+        if response.status_code == 200:
+            return redirect(url_for("admin_route.patch_route.patches_management"))
+        else:
+            return render_template("edit_patches.html", patch=patch_request, user=get_user_data(), error=f"Lỗi khi cập nhật patch:")
+
+    return redirect(url_for("admin_route.patch_route.edit_patch", id = id ))

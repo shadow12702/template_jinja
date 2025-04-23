@@ -25,7 +25,9 @@ admin_route.register_blueprint(config_route)
 
 # Phần còn lại của code không thay đổi
 
-
+@admin_route.route("/error")
+def error():
+    return render_template("error.html")
 
 @admin_route.route("/admin")
 def admin():
@@ -34,7 +36,7 @@ def admin():
     menu = ApiService.get_menu(1)
     
     # Lấy route từ query parameter, mặc định là trang chính
-    selected_route = request.args.get('route', '/admin/customer')
+    selected_route = request.args.get('route', '/error')
     
     return render_template("admin.html", user=user, menu=menu, selected_route=selected_route)
 

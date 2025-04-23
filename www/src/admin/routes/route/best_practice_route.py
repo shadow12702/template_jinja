@@ -86,24 +86,25 @@ def add_new_best_practice():
 @best_practice_route.route("/detail_best_practice/<id>")
 def detail_best_practice(id):
     best_practice = get_best_practice_by_id(id)
-    return render_template("update_best_practice.html", best_practice=best_practice, user=get_user_data())
+    return render_template("detail_best_practice.html", best_practice=best_practice, user=get_user_data())
 
 #---------------------------------------Edit Best Practice----------------------------#
 
-@best_practice_route.route("/update_info_best_practice/<id>", methods=["GET", "POST"])
-def update_best_practice(id):
-        best_practice_request = BestPracticeRequest(
-            db_version=request.form.get("db_version"),
-            parameter=request.form.get("parameter"),
-            param_default_value=request.form.get("param_default_value"),
-            param_recommend_value=request.form.get("param_recommend_value"),
-            for_rac_only=request.form.get("for_rac_only"),
-            notes=request.form.get("notes")
-        )
-        response = update_best_practice_action(id, best_practice_request)
-       
-        if response.status_code == 200:
-            return redirect(url_for("admin_route.best_practice_route.best_practice_management"))
-        else:
-            best_practice = get_best_practice_by_id(id)
-            return render_template("detail_best_practice.html", best_practice=best_practice, user=get_user_data(), error=f"Lỗi khi cập nhật best practice: {response.text}")
+@best_practice_route.route("/update_info_best_practice", methods=["GET", "POST"])
+def update_best_practice():
+    id = request.form.get("id")
+    best_practice_request = BestPracticeRequest(
+        db_version=request.form.get("db_version"),
+        parameter=request.form.get("parameter"),
+        param_default_value=request.form.get("param_default_value"),
+        param_recommend_value=request.form.get("param_recommend_value"),
+        for_rac_only=request.form.get("for_rac_only"),
+        notes=request.form.get("notes")
+    )
+    response = update_best_practice_action(id, best_practice_request)
+
+    if response.status_code == 200:
+        return redirect(url_for("admin_route.best_practice_route.best_practice_management"))
+    else:
+        best_practice = get_best_practice_by_id(id)
+        return render_template("detail_best_practice.html", best_practice=best_practice, user=get_user_data(), error=f"Lỗi khi cập nhật best practice: {response.text}")
