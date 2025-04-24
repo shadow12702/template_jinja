@@ -11,7 +11,7 @@
                     <h1>Add New Customer</h1>
                     <p>Create a new customer profile in the system</p>
                 </div>
-                <a href="{{ url_for('admin_route.customer_route.customer_management') }}" class="btn btn-outline-secondary back-btn">
+                <a href="/admin?route=/customer" target="_parent" class="btn btn-outline-secondary back-btn">
                     <i class="fas fa-arrow-left"></i> Back to Customers
                 </a>
             </div>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="form-actions mt-4">
                                 <div class="text-end">
-                                    <a href="{{ url_for('admin_route.customer_route.customer_management') }}" class="btn btn-outline-secondary me-2">Cancel</a>
+                                    <a href="/admin?route=/customer" target="_parent" class="btn btn-outline-secondary me-2">Cancel</a>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-plus me-1"></i> Create Customer
                                     </button>

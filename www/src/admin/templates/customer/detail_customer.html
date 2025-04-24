@@ -13,7 +13,7 @@
                     <h4 class="mb-0"><i class="fas fa-user-edit me-2"></i> Edit Customer</h4>
                     <small class="text-light">Update customer information</small>
                 </div>
-                <a href="{{ url_for('admin_route.customer_route.customer_management') }}" class="btn btn-light text-primary shadow-sm"><i class="fas fa-arrow-left me-1"></i> Back</a>
+                <a href="/admin?route=/customer" target="_parent" class="btn btn-light text-primary shadow-sm"><i class="fas fa-arrow-left me-1"></i> Back</a>
             </div>
 
             <div class="card-body px-4 py-3">
@@ -49,7 +49,7 @@
                         <!-- Add more fields if needed -->
 
                         <div class="col-12 text-end mt-3">
-                            <a href="{{ url_for('admin_route.customer_route.customer_management') }}"
+                            <a href="/admin?route=/customer" target="_parent"
                                 class="btn btn-outline-secondary me-2">
                                 <i class="fas fa-times-circle me-1"></i> Cancel
                             </a>

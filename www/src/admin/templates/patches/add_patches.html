@@ -12,7 +12,7 @@
                     <h1>Add New Patch</h1>
                     <p>Create a new patch in the system</p>
                 </div>
-                <a href="{{ url_for('admin_route.patch_route.patches_management') }}" class="btn btn-outline-secondary back-btn">
+                <a href="/admin?route=/db-patch" target="_parent"class="btn btn-outline-secondary back-btn">
                     <i class="fas fa-arrow-left"></i> Back to Patches
                 </a>
             </div>
@@ -142,7 +142,7 @@
 
                             <div class="form-actions mt-4">
                                 <div class="text-end">
-                                    <a href="{{ url_for('admin_route.patch_route.patches_management') }}" class="btn btn-outline-secondary me-2">
+                                    <a href="/admin?route=/db-patch" target="_parent"class="btn btn-outline-secondary me-2">
                                         Cancel
                                     </a>
                                     <button type="submit" class="btn btn-primary">

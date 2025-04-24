@@ -9,7 +9,7 @@
                     <h1>Edit Patch</h1>
                     <p>Update patch information</p>
                 </div>
-                <a href="{{ url_for('admin_route.patch_route.patches_management') }}" class="btn btn-outline-secondary back-btn"><i class="fas fa-arrow-left"></i> Back to Patches</a>
+                <a href="/admin?route=/db-patch" target="_parent" class="btn btn-outline-secondary back-btn"><i class="fas fa-arrow-left"></i> Back to Patches</a>
             </div>
 
             <!-- Hiển thị thông báo lỗi nếu có -->
@@ -138,7 +138,7 @@
 
                             <div class="form-actions mt-4">
                                 <div class="text-end">
-                                    <a href="{{ url_for('admin_route.patch_route.patches_management') }}" class="btn btn-outline-secondary me-2">Cancel</a>
+                                    <a href="/admin?route=/db-patch" target="_parent"class="btn btn-outline-secondary me-2">Cancel</a>
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-save me-1"></i> Save Changes</button>
                                 </div>
                             </div>

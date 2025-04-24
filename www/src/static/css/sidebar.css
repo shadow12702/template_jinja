@@ -33,6 +33,8 @@
 /* Collapsed state */
 .sidebar.collapsed {
     width: 70px;
+    padding: 0; /* Loại bỏ padding hoàn toàn */
+    margin: 0; /* Loại bỏ margin */
 }
 
 /* Brand/logo area */
@@ -223,6 +225,7 @@
 
 .submenu-link:hover {
     color: #006400;
+    background-color: rgba(0, 100, 0, 0.05);
 }
 
 .submenu-link:hover:before {
@@ -230,12 +233,13 @@
 }
 
 .submenu-link.active {
-    color: #006400;
+    color: #ffffff;
     font-weight: 500;
+    background-color: #004d00; /* Màu xanh đậm hơn để nổi bật */
 }
 
 .submenu-link.active:before {
-    background-color: #006400;
+    background-color: #ffffff;
     width: 5px;
     height: 5px;
 }
@@ -344,18 +348,44 @@
     }
 }
 
-
 .dropdown-toggle::after {
-content: none;
+    content: none;
 }
+
 /* Fix for centering sidebar icons in collapsed state */
 .sidebar.collapsed .nav-link.menu-link i,
 .sidebar.collapsed .menu-toggle i {
-    margin-right: 0;
-    margin-left: 0;
+    margin: 0; /* Loại bỏ mọi margin để tránh lệch */
+    padding: 0; /* Loại bỏ padding */
     text-align: center;
     width: 100%;
-    font-size: 1.4rem; /* Slightly larger icons for better visibility */
+    font-size: 1.4rem; /* Giữ kích thước icon */
+    line-height: 1; /* Đảm bảo không có khoảng cách thừa theo chiều dọc */
+    display: flex; /* Sử dụng flex để căn giữa trong chính icon */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Center icon position in collapsed state */
+.sidebar.collapsed .nav-item.menu-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0; /* Loại bỏ margin */
+    padding: 0; /* Loại bỏ padding */
+}
+
+/* Đảm bảo menu link và toggle chiếm toàn bộ không gian và căn giữa */
+.sidebar.collapsed .nav-link.menu-link,
+.sidebar.collapsed .menu-toggle {
+    padding: 0; /* Loại bỏ padding để tránh lệch */
+    margin: 0; /* Loại bỏ margin */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 48px; /* Đảm bảo chiều cao cố định */
+    display: flex; /* Đảm bảo sử dụng flexbox */
 }
 
 /* Ensure menu text is properly hidden in collapsed state */
@@ -380,19 +410,6 @@ content: none;
     padding: 0 !important;
     overflow: hidden;
     display: none !important;
-}
-
-/* Center icon position in collapsed state */
-.sidebar.collapsed .nav-item.menu-item {
-    display: flex;
-    justify-content: center;
-}
-
-.sidebar.collapsed .nav-link.menu-link,
-.sidebar.collapsed .menu-toggle {
-    padding: 0.75rem 0;
-    justify-content: center;
-    width: 100%;
 }
 
 /* Improve transition for collapsing submenu */

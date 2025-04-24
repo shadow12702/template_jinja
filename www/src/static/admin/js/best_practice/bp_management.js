@@ -1,45 +1,45 @@
-// bp_management.js
+// patches_management.js
 
 document.addEventListener('DOMContentLoaded', function () {
-    const tbody = document.getElementById('best-practices-tbody');
+    const tbody = document.getElementById('patches-tbody');
     const rows = tbody.getElementsByTagName('tr');
-    const totalBestPractices = rows.length;
-    const itemsPerPage = 10; // Number of best practices per page
+    const totalPatches = rows.length;
+    const itemsPerPage = 10; // Số bản ghi mỗi trang
     let currentPage = 1;
 
     const paginationInfo = document.getElementById('pagination-info');
-    const totalBestPracticesSpan = document.getElementById('total-best_practice');
+    const totalPatchesSpan = document.getElementById('total-patches');
     const paginationControls = document.getElementById('pagination-controls');
 
-    // Display total number of best practices
-    totalBestPracticesSpan.textContent = totalBestPractices;
+    // Hiển thị tổng số bản ghi
+    totalPatchesSpan.textContent = totalPatches;
 
-    // Function to display rows for the current page
+    // Hàm hiển thị các hàng cho trang hiện tại
     function displayRows(page) {
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
 
-        // Hide all rows
+        // Ẩn tất cả các hàng
         for (let i = 0; i < rows.length; i++) {
             rows[i].style.display = 'none';
         }
 
-        // Show rows for the current page
-        for (let i = start; i < end && i < totalBestPractices; i++) {
+        // Hiển thị các hàng cho trang hiện tại
+        for (let i = start; i < end && i < totalPatches; i++) {
             rows[i].style.display = '';
         }
 
-        // Update pagination info (e.g., "Showing 10 of 25 best practices")
-        const showingCount = Math.min(itemsPerPage, totalBestPractices - start);
+        // Cập nhật thông tin phân trang
+        const showingCount = Math.min(itemsPerPage, totalPatches - start);
         paginationInfo.textContent = showingCount;
     }
 
-    // Function to create pagination controls
+    // Hàm tạo các nút phân trang
     function createPagination() {
-        const pageCount = Math.ceil(totalBestPractices / itemsPerPage);
-        paginationControls.innerHTML = ''; // Clear existing controls
+        const pageCount = Math.ceil(totalPatches / itemsPerPage);
+        paginationControls.innerHTML = ''; // Xóa các nút cũ
 
-        // Previous button
+        // Nút Previous
         const prevLi = document.createElement('li');
         prevLi.className = 'page-item' + (currentPage === 1 ? ' disabled' : '');
         prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous">Previous</a>`;
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         paginationControls.appendChild(prevLi);
 
-        // Page number buttons
+        // Các nút số trang
         for (let i = 1; i <= pageCount; i++) {
             const li = document.createElement('li');
             li.className = 'page-item' + (i === currentPage ? ' active' : '');
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             paginationControls.appendChild(li);
         }
 
-        // Next button
+        // Nút Next
         const nextLi = document.createElement('li');
         nextLi.className = 'page-item' + (currentPage === pageCount ? ' disabled' : '');
         nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next">Next</a>`;
@@ -82,8 +82,8 @@ document.addEventListener('DOMContentLoaded', function () {
         paginationControls.appendChild(nextLi);
     }
 
-    // Initialize pagination
-    if (totalBestPractices > 0) {
+    // Khởi tạo phân trang
+    if (totalPatches > 0) {
         displayRows(currentPage);
         createPagination();
     }

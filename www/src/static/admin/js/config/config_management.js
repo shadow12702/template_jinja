@@ -1,77 +1,90 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Pagination variables
-    const itemsPerPage = 10;
+// patches_management.js
+
+document.addEventListener('DOMContentLoaded', function () {
+    const tbody = document.getElementById('patches-tbody');
+    const rows = tbody.getElementsByTagName('tr');
+    const totalPatches = rows.length;
+    const itemsPerPage = 10; // Số bản ghi mỗi trang
     let currentPage = 1;
-    const rows = document.querySelectorAll("#config-tbody tr");
-    const totalPages = Math.ceil(rows.length / itemsPerPage);
-    
-    // Initialize pagination
-    updatePagination();
-    
-    // Add event listeners to pagination buttons
-    document.querySelectorAll(".pagination .page-item:not(#prevPageBtn):not(#nextPageBtn)").forEach(item => {
-        item.addEventListener("click", function(e) {
+
+    const paginationInfo = document.getElementById('pagination-info');
+    const totalPatchesSpan = document.getElementById('total-patches');
+    const paginationControls = document.getElementById('pagination-controls');
+
+    // Hiển thị tổng số bản ghi
+    totalPatchesSpan.textContent = totalPatches;
+
+    // Hàm hiển thị các hàng cho trang hiện tại
+    function displayRows(page) {
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        // Ẩn tất cả các hàng
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].style.display = 'none';
+        }
+
+        // Hiển thị các hàng cho trang hiện tại
+        for (let i = start; i < end && i < totalPatches; i++) {
+            rows[i].style.display = '';
+        }
+
+        // Cập nhật thông tin phân trang
+        const showingCount = Math.min(itemsPerPage, totalPatches - start);
+        paginationInfo.textContent = showingCount;
+    }
+
+    // Hàm tạo các nút phân trang
+    function createPagination() {
+        const pageCount = Math.ceil(totalPatches / itemsPerPage);
+        paginationControls.innerHTML = ''; // Xóa các nút cũ
+
+        // Nút Previous
+        const prevLi = document.createElement('li');
+        prevLi.className = 'page-item' + (currentPage === 1 ? ' disabled' : '');
+        prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous">Previous</a>`;
+        prevLi.addEventListener('click', (e) => {
             e.preventDefault();
-            currentPage = parseInt(this.getAttribute("data-page"));
-            updatePagination();
-        });
-    });
-    
-    // Previous page button
-    document.getElementById("prevPageBtn").addEventListener("click", function(e) {
-        e.preventDefault();
-        if (currentPage > 1) {
-            currentPage--;
-            updatePagination();
-        }
-    });
-    
-    // Next page button
-    document.getElementById("nextPageBtn").addEventListener("click", function(e) {
-        e.preventDefault();
-        if (currentPage < totalPages) {
-            currentPage++;
-            updatePagination();
-        }
-    });
-    
-    // Function to update pagination
-    function updatePagination() {
-        // Update current page display
-        document.getElementById("currentPage").textContent = currentPage;
-        
-        // Show/hide rows based on current page
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        
-        rows.forEach((row, index) => {
-            if (index >= startIndex && index < endIndex) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
+            if (currentPage > 1) {
+                currentPage--;
+                displayRows(currentPage);
+                createPagination();
             }
         });
-        
-        // Update active page button
-        document.querySelectorAll(".pagination .page-item:not(#prevPageBtn):not(#nextPageBtn)").forEach(item => {
-            if (parseInt(item.getAttribute("data-page")) === currentPage) {
-                item.classList.add("active");
-            } else {
-                item.classList.remove("active");
+        paginationControls.appendChild(prevLi);
+
+        // Các nút số trang
+        for (let i = 1; i <= pageCount; i++) {
+            const li = document.createElement('li');
+            li.className = 'page-item' + (i === currentPage ? ' active' : '');
+            li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            li.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentPage = i;
+                displayRows(currentPage);
+                createPagination();
+            });
+            paginationControls.appendChild(li);
+        }
+
+        // Nút Next
+        const nextLi = document.createElement('li');
+        nextLi.className = 'page-item' + (currentPage === pageCount ? ' disabled' : '');
+        nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next">Next</a>`;
+        nextLi.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentPage < pageCount) {
+                currentPage++;
+                displayRows(currentPage);
+                createPagination();
             }
         });
-        
-        // Update prev/next buttons
-        if (currentPage === 1) {
-            document.getElementById("prevPageBtn").classList.add("disabled");
-        } else {
-            document.getElementById("prevPageBtn").classList.remove("disabled");
-        }
-        
-        if (currentPage === totalPages || totalPages === 0) {
-            document.getElementById("nextPageBtn").classList.add("disabled");
-        } else {
-            document.getElementById("nextPageBtn").classList.remove("disabled");
-        }
+        paginationControls.appendChild(nextLi);
+    }
+
+    // Khởi tạo phân trang
+    if (totalPatches > 0) {
+        displayRows(currentPage);
+        createPagination();
     }
 });

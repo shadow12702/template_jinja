@@ -9,7 +9,7 @@
             <h1>Add New Best Practice</h1>
             <p>Create a new best practice configuration in the system</p>
           </div>
-          <a href="{{ url_for('admin_route.best_practice_route.best_practice_management') }}" class="btn btn-outline-secondary back-btn"><i class="fas fa-arrow-left"></i> Back to Best Practices</a>
+          <a href="/admin?route=/best-practice" target="_parent"   class="btn btn-outline-secondary back-btn"><i class="fas fa-arrow-left"></i> Back to Best Practices</a>
         </div>
 
         <!-- Form for adding new best practice -->
@@ -64,7 +64,7 @@
                   </div>
 
                   <div class="text-end mt-4">
-                    <a href="{{ url_for('admin_route.best_practice_route.best_practice_management') }}" class="btn btn-outline-secondary me-2">Cancel</a>
+                    <a href="/admin?route=/best-practice" target="_parent" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-plus me-1"></i> Create</button>
                   </div>
                 </form>
