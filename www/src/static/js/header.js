@@ -74,8 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const dbCusCode = db.getAttribute('data-cus-code');
             if (dbCusCode === customerCode) {
                 db.closest('li').style.display = 'block';
-            } else {
-                db.closest('li').style.display = 'none';
             }
         });
         

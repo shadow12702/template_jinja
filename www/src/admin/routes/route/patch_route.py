@@ -64,34 +64,34 @@ def add_new_patch():
 
     return render_template("add_patches.html")
 
-# Route hiển thị form chỉnh sửa patch
-@patch_route.route("/edit_patch/<int:patch_id>")
-def edit_patch(patch_id):
-    patch = PatchRepository.get_patch_by_id(patch_id)
-    if not patch:
-        return render_template("edit_patches.html", error="Patch không tồn tại trong hệ thống")
-    return render_template("edit_patches.html", patch=patch)
+# # Route hiển thị form chỉnh sửa patch
+# @patch_route.route("/edit_patch/<int:patch_id>")
+# def edit_patch(patch_id):
+#     patch = PatchRepository.get_patch_by_id(patch_id)
+#     if not patch:
+#         return render_template("edit_patches.html", error="Patch không tồn tại trong hệ thống")
+#     return render_template("edit_patches.html", patch=patch)
 
 # Route xử lý cập nhật patch
-@patch_route.route("/edit_patch", methods=["POST"])
-def update_patch():
-    if request.method == "POST":
-        id=request.form.get("id")
-        patch_request = PatchUpdateRequest(
-            root=int(request.form.get("root")),
-            db_version=request.form.get("db_version", ""),
-            type=request.form.get("type", ""),
-            format=request.form.get("format", ""),
-            patch_type=request.form.get("patch_type", ""),
-            fixed_in_ru=request.form.get("fixed_in_ru", ""),
-            fixed_in_mrp=request.form.get("fixed_in_mrp", "NOT APPLICABLE"),
-            description=request.form.get("description", "")
-        )
-        response = PatchRepository.update_patch_action( id ,patch_request)
+# @patch_route.route("/edit_patch", methods=["POST"])
+# def update_patch():
+#     if request.method == "POST":
+#         id=request.form.get("id")
+#         patch_request = PatchUpdateRequest(
+#             root=int(request.form.get("root")),
+#             db_version=request.form.get("db_version", ""),
+#             type=request.form.get("type", ""),
+#             format=request.form.get("format", ""),
+#             patch_type=request.form.get("patch_type", ""),
+#             fixed_in_ru=request.form.get("fixed_in_ru", ""),
+#             fixed_in_mrp=request.form.get("fixed_in_mrp", "NOT APPLICABLE"),
+#             description=request.form.get("description", "")
+#         )
+#         response = PatchRepository.update_patch_action( id ,patch_request)
 
-        if response.status_code == 200:
-            return redirect(url_for("admin_route.patch_route.patches_management"))
-        else:
-            return render_template("edit_patches.html", patch=patch_request , error=f"Lỗi khi cập nhật patch:")
+#         if response.status_code == 200:
+#             return redirect(url_for("admin_route.patch_route.patches_management"))
+#         else:
+#             return render_template("edit_patches.html", patch=patch_request , error=f"Lỗi khi cập nhật patch:")
 
-    return redirect(url_for("admin_route.patch_route.edit_patch", id = id ))
+#     return redirect(url_for("admin_route.patch_route.edit_patch", id = id ))

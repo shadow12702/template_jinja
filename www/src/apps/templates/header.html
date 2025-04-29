@@ -17,24 +17,34 @@
             Select Customer
         </button>
         <ul class="dropdown-menu" aria-labelledby="customerDropdown">
-            {% if customers %} 
-            {% for customer in customers %}
-            <li>
-                <button class="dropdown-item customer-select-btn" type="button"
-                    data-cus-code="{{ customer.code }}" data-cus-name="{{ customer.name }}"
-                    value="{{ customer.code }}">
-                    {{ customer.name }}
-                </button>
-            </li>
-            {% endfor %} 
+            {% if customers %}
+                {% if customers|length >= 2 %}
+                    {% for customer in customers %}
+                    <li>
+                        <button class="dropdown-item customer-select-btn" type="button"
+                            data-cus-code="{{ customer.code }}" data-cus-name="{{ customer.name }}"
+                            value="{{ customer.code }}">
+                            {{ customer.name }}
+                        </button>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li>
+                        <button class="dropdown-item customer-select-btn active" type="button"
+                            data-cus-code="{{ customers[0].code }}" data-cus-name="{{ customers[0].name }}"
+                            value="{{ customers[0].code }}">
+                            {{ customers[0].name }}
+                        </button>
+                    </li>
+                {% endif %}
             {% else %}
-            <li>
-                <button class="dropdown-item disabled" type="button">
-                    No customers available
-                </button>
-            </li>
+                <li>
+                    <button class="dropdown-item disabled" type="button">
+                        No customer select
+                    </button>
+                </li>
             {% endif %}
-        </ul>
+        </ul>        
     </div>
 
     <!-- Database Dropdown -->
@@ -49,7 +59,7 @@
             <li>
                 <button class="dropdown-item database-select-btn" type="button" data-cus-code="{{ db.customer_code }}"
                     data-db-name="{{ db.db_name }}" value="{{ db.customer_code }}">
-                    {{ db.db_name }}
+                    {{ db.db_name }} 
                 </button>
             </li>
             {% endfor %} 

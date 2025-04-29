@@ -1,3 +1,4 @@
+from math import ceil
 from flask import Blueprint, render_template, request, redirect, session, url_for
 from admin.presentation.repositories.best_practice_repository import BestPracticeRepository
 from admin.models.model_request import BestPracticeRequest 
@@ -14,8 +15,20 @@ best_practice_route = Blueprint('best_practice_route', __name__, template_folder
 
 @best_practice_route.route("/best-practice")
 def best_practice_management():
-    best_practices = BestPracticeRepository.get_best_practices()
-    return render_template("best_practice_management.html", best_practices=best_practices)
+    # page = request.args.get('page' , 1 , type = int)
+    # per_page = 10 
+    
+    all_best_practices = BestPracticeRepository.get_best_practices()
+    # total = len(all_best_practices)
+    # start = (page - 1) * 10 
+    # end = (start + per_page)
+    # best_practices = all_best_practices[start : end]
+    
+    # total_pages = ceil(total / per_page)
+    
+    return render_template("best_practice_management.html", best_practices=all_best_practices)
+
+
 
 #---------------------------------------Add Best Practice----------------------------#
 
@@ -65,7 +78,7 @@ def update_best_practice():
     response = BestPracticeRepository.update_best_practice_action(id, best_practice_request)
 
     if response.status_code == 200:
-        return redirect(url_for("admin_route.best_practice_route.best_practice_management"))
+        return redirect(url_for("admin_route.admin", route="/best-practice"))
     else:
         best_practice = BestPracticeRepository.get_best_practice_by_id(id)
         return render_template("detail_best_practice.html", best_practice=best_practice,error=f"Lỗi khi cập nhật best practice: {response.text}")

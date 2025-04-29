@@ -5,7 +5,7 @@ ROOT_AT = 'src'
 class AppEnum(Enum):
     
     # Config file    
-    JSON_CONFIG = 'config/config.json'
+    JSON_CONFIG = 'config/bk.config.json'
         
     @property
     def file_path(self):

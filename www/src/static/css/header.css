@@ -72,6 +72,7 @@
   }
   
   .dropdown-menu-custom {
+    display: none;
     position: absolute;
     right: 0;
     top: 45px;
@@ -79,7 +80,6 @@
     background-color: white;
     border-radius: 0.5rem;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    display: none;
     z-index: 1000;
   }
   

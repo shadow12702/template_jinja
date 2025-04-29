@@ -1,2 +1,98 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
+<style>
+    body {
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .custom-card {
+        background-color: #e6f4ea;
+        border: 1px solid #28a745;
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+    .custom-title {
+        background-color: #28a745;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .custom-note {
+        background-color: #fff3cd;
+        padding: 10px;
+        border-left: 4px solid #ffc107;
+        margin-bottom: 20px;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .status-icon {
+        font-size: 1.5rem;
+    }
+</style>
+
 <h1>Pie Chart</h1>
 {{ graph_html | safe }}
+<div class="container">
+    <div class="custom-card">
+        <div class="alert alert-success" role="alert">
+            Indicate the I/O bandwidth in megabytes per second on the database node.
+            <br><strong>MBps = (physical read total bytes/sec + physical write total bytes/sec) ÷ 1024 ÷ 1024</strong>
+        </div>
+
+        <div class="custom-note">
+            <strong>Note:</strong> Evaluation based on guideline values, not the standards in all environments.
+        </div>
+
+        <div class="card custom-card w-100">
+            <div class="table-responsive w-100">
+                <table class="table custom-table w-100" id="databaseTable">
+                    <thead>
+                        <tr>
+                            <th>Customer Code</th>
+                            <th>Customer Name</th>
+                            <th>Version</th>
+                            <th>Database Name</th>
+                            <th>CDB</th>
+                            <th>PDB DBID</th>
+                            <th>PDB Name</th>
+                            <th style="text-align: center;">End Snap</th>
+                            <th>End Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="awr-tbody">
+                        <tr>
+                            <td>text</td>
+                            <td>text</td>
+                            <td>text</td>
+                            <td>text</td>
+                            <td><span class="badge bg-success"> Yes</span></td>
+                            <td>text</td>
+                            <td>text</td>
+                            <td style="text-align: center;"> </td>
+                            <td>text</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div>
+</div>
+<footer class="mt-4 text-center text-muted" style="font-size: small;">
+    v1.0 - Designed with OSAS.
+</footer>
+</div>

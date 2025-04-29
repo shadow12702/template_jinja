@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from core.request import RequestHandler
-from src.admin.models.response.awr_repo_info_response import AwrRepoInfoResponse
+from src.admin.presentation.repository import AwrRepository
 from src.admin.models.response.customer_response import CustomerResponse
 from src.apps.models.responses.menu_model import MenuModel
 from src.apps.models.responses.user_model import UserModel
@@ -22,7 +22,7 @@ def index():
             menu = ApiService.get_menu(0) 
             # Lấy dữ liệu khách hàng
             customers = ApiService.get_customer(0)
-            db_repo_info = ApiService.get_db_repo_info(customers[0].code) if customers else []
+            db_repo_info = AwrRepository.get_db_repo_info()
             
             selected_route = request.args.get('route', '/dashboard') 
             return render_template("index.html", selected_route = selected_route,

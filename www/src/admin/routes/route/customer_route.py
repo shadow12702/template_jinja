@@ -28,12 +28,8 @@ def add_customer():
 # @admin_required
 def add_new_customer():
     
-    name = request.form.get("name")
-    
-    code = CustomerRequest(code = request.form.get("code"))
-    name = CustomerRequest(name = request.form.get("name"))
-   
-    response = CustomerRepository.add_customer_action(code, name)
+    data = CustomerRequest(code = request.form.get("code") , name = request.form.get("name"))
+    response = CustomerRepository.add_customer_action(data)
    
     if response.status_code == 200:
         return redirect(request.referrer or url_for("customer_route.customer_management"))

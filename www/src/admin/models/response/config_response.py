@@ -7,5 +7,3 @@ class ConfigResponse(BaseModel):
     key: str
     value: str
     is_locked: int
-    created_on: datetime
-    last_changed: datetime
