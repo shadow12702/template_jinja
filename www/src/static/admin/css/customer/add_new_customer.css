@@ -108,8 +108,20 @@ textarea.form-control {
     transition: all 0.3s;
 }
 
+.btn-primary {
+    background-color: #006400;
+    border-color: #006400;
+}
+
+.btn-primary:hover {
+    background-color: #005200;
+    border-color: #005200;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .btn-outline-secondary {
-    color: #5f666d;
+    color: #6c757d;
     border-color: #e0e0e0;
 }
 

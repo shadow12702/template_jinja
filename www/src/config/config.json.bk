@@ -1,0 +1,8 @@
+{
+	"api_url": {
+		"host": "http://138.2.82.108",
+		"port": 5000
+	},
+	"version": "v1.0",
+	"secret_key": "eba7LGmAcdHATN6Z00qsFO8bp4Ywyob&"
+}

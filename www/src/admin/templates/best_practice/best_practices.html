@@ -1,0 +1,111 @@
+<!-- admin/template/best_practice/best_practices.html -->
+ 
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/css/patches/patches_management.css') }}">
+
+<div class="w-100">
+    <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
+        <div class="container-fluid p-4">
+            <!-- Page Header -->
+            <div class="page-header mb-4">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h1 class="page-title">Patches Management</h1>
+                        <p class="page-subtitle">Track and manage database patch information</p>
+                    </div>
+                    <div class="col-auto">
+                        <a href="/admin?route=/add_patch" target="_parent" class="btn btn-primary add-new-btn">
+                            <i class="fas fa-plus me-1"></i> Add New Patch
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Patches Table -->
+            <div class="card custom-card">
+                <div class="table-responsive">
+                    <table class="table custom-table" id="patchesTable">
+                        <thead>
+                            <tr>
+                                <th class="checkbox-col"><input type="checkbox" class="select-all" id="selectAllPatches"></th>
+                                <th class="sortable" data-sort="id">Patch ID <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="type">Patch Type <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="type2">Type <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="version">DB Version <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="format">Format <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="root">Patch Root <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="ru">Fixed in RU <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="mrp">Fixed in MRP <i class="fas fa-sort"></i></th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for patch in best_practices %}
+                            <tr data-version="{{ patch.db_version }}">
+                                <td><input type="checkbox" class="row-checkbox"></td>
+                                <td class="patch-id">{{ patch.id }}</td>
+                                <td>{{ patch.type }}</td>
+                                <td>
+                                    <span class="db-version-badge">{{ patch.db_version }}</span>
+                                </td>
+                                <td>{{ patch.format }}</td>
+                                <td>{{ patch.root }}</td>
+                                <td>{{ patch.fixed_in_ru or '' }}</td>
+                                <td>{{ patch.fixed_in_mrp or '' }}</td>
+                                <td class="description-cell" title="{{ patch.description }}">
+                                    {{ (patch.description[:30] + '...') if patch.description and (patch.description|length > 30) else (patch.description or '-') }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            
+                            {% if not patches %}
+                            <tr class="empty-table">
+                                <td colspan="11">
+                                    <div class="empty-state">
+                                        <i class="fas fa-code-branch"></i>
+                                        <h4>No Patches Found</h4>
+                                        <p>Add your first patch to get started</p>
+                                        <a href="{{ url_for('admin_route.patch_route.add_patch') }}" class="btn btn-primary">
+                                            <i class="fas fa-plus me-1"></i> Add New Patch
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--Pagination -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="patchDeleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i> This action cannot be undone.
+                </div>
+                <p>Are you sure you want to delete patch with ID: <strong id="patch-id-to-delete"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <form id="deletePatchForm" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt me-1"></i> Delete Permanently
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

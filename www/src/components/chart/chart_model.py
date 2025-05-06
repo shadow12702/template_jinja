@@ -2,8 +2,8 @@ from typing import List
 from pydantic import BaseModel
 
 class ChartSize(BaseModel):
-    width: int
-    height: int
+    width: int = 600
+    height: int = 300
 
 class ChartModel(BaseModel):
     id: str

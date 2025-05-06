@@ -55,8 +55,3 @@ table tr th:last-child {
 	text-align: center;
 	width: 8%;
 }
-
-table tr td:first-child,
-table tr th:first-child {
-	padding-left: 1rem;
-}

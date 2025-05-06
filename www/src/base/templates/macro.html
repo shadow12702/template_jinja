@@ -1,0 +1,59 @@
+<!-- macro.html -->
+
+{% macro render_menu(menu, parent_code="", is_sidebar_collapsed=False) %}
+<ul id="main-menu" class="nav flex-column">
+    {% for item in menu %}
+        {% if item.parent == "" %}
+            <li class="nav-item w-100 menu-item" data-code="{{ item.code }}">
+                {% if not item.has_children %}
+                        <a href="javascript:void(0)" class="nav-link menu-link" data-route="{{ side }}{{ item.prefix }}{{ item.route }}">
+                            <i class="{{ item.icon }}"></i>
+                            {% if not is_sidebar_collapsed %}<span>{{ item.name }}</span>{% endif %}
+                        </a>
+                {% else %}
+                    <a class="nav-link dropdown-toggle d-flex align-items-center menu-toggle"
+                       data-bs-toggle="collapse"
+                       href="#submenu-{{ item.code|replace(' ', '-')|lower }}"
+                       role="button"
+                       aria-expanded="false"
+                       aria-controls="submenu-{{ item.code|replace(' ', '-')|lower }}">
+                        <i class="{{ item.icon }}"></i>
+                        {% if not is_sidebar_collapsed %}
+                            <span>{{ item.name }}</span>
+                            <i class="dropdown-icon fa fa-chevron-down ms-auto"></i>
+                        {% endif %}
+                    </a>
+
+                    <ul class="submenu collapse ps-3" id="submenu-{{ item.code|replace(' ', '-')|lower }}">
+                        {% for child in menu %}
+                            {% if child.parent == item.code %}
+                                <li class="nav-item">
+                                    <!-- {% if item.admin != 1 %} -->
+                                    <a class="nav-link submenu-link"
+                                        data-parent="{{ item.code }}"
+                                        data-code="{{ child.code }}"
+                                        href="javascript:void(0)" data-route="{{ side }}{{ child.prefix }}/{{ child.code }}" 
+                                        data-link = "{{ child.route }}"
+                                        >
+                                        {{ child.name }}
+                                    </a>
+                                    <!-- {% else %}
+                                        <a class="nav-link submenu-link"
+                                           data-parent="{{ item.code }}"
+                                           data-code="{{ child.code }}"
+                                             href="javascript:void(0)" data-route="/echarts/{{ child.code }}">                                              
+                                            {{ child.name }}
+                                        </a>
+                                    {% endif %} -->
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endmacro %}
+
+{{ render_menu(menu, "", is_sidebar_collapsed) }}

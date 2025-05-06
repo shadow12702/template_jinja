@@ -1,0 +1,50 @@
+# base/route.py
+
+from flask import Blueprint, render_template, request, session, redirect, url_for
+from pathlib import Path
+from base.model.user_model import UserModel
+from base.service import menu_service
+from admin.service import customer_service 
+from apps.route import app_route
+from admin.route import admin_route
+
+template_path = Path(__file__).resolve().parents[0] / 'templates'
+base_route = Blueprint('base', __name__, template_folder=template_path)
+
+base_route.register_blueprint(app_route, url_prefix='/apps')
+base_route.register_blueprint(admin_route, url_prefix='/admin')
+
+def render_layout(type:int = 0):
+    '''
+    Render the layout based on the type of user.
+    '''
+    user_info = session.get('user')
+    if user_info:
+        user = UserModel(**user_info)
+        menu = menu_service.get_menu(type) 
+        customer = customer_service.get_customer()
+        # db_info_by_customer 
+        side = "/apps"
+        if type == 1 : 
+            side = "/admin" 
+            route = request.args.get('route', f"{side}/dashboard")
+            template_name = 'admin.html'
+        else:
+            route = request.args.get('route', f"{side}/dashboard")
+            template_name = 'index.html'            
+        print(f"Route: {route}")
+        return render_template(template_name, user=user, route=route, menu=menu, side = side, customer=customer)
+    else:
+        return redirect(url_for('auth.login'))
+    
+@base_route.route('/')
+def index():
+    return render_layout(0)
+
+@base_route.route('/admin')
+def admin():
+    return render_layout(1)
+
+@base_route.route('/error')
+def error():
+    return render_template('error.html')
