@@ -7,7 +7,7 @@ from pathlib import Path
 template_path = Path(__file__).resolve().parents[1] / 'templates/awr_repo'
 awr_repo_route = Blueprint('awr_repo', __name__, template_folder=template_path)
 
-@awr_repo_route.route('/list')
+@awr_repo_route.route('/')
 def list_awrs():
     '''Get all awrs.'''
     _list = awr_repo_service.get_awr_repo()

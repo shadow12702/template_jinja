@@ -25,7 +25,7 @@ def render_layout(type:int = 0):
         customer = customer_service.get_customer()
         # db_info_by_customer 
         side = "/apps"
-        if type == 1 : 
+        if type == 1: 
             side = "/admin" 
             route = request.args.get('route', f"{side}/dashboard")
             template_name = 'admin.html'
@@ -37,12 +37,24 @@ def render_layout(type:int = 0):
     else:
         return redirect(url_for('auth.login'))
     
+def authorize():
+    user = session.get('user')
+    if not user:
+        return redirect(url_for('auth.login'))
+    elif user["is_admin"] == False:
+        return render_layout(0)
+    return None
+admin_route.before_request(authorize)
+    
 @base_route.route('/')
 def index():
     return render_layout(0)
 
 @base_route.route('/admin')
 def admin():
+    result = authorize()
+    if result:
+        return result
     return render_layout(1)
 
 @base_route.route('/error')

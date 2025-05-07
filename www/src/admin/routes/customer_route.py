@@ -3,13 +3,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from admin.model.request.customer_request import CustomerRequest
 from admin.service import customer_service
-
 from pathlib import Path
-template_path = Path(__file__).resolve().parents[1] / 'templates/customer'
 
+template_path = Path(__file__).resolve().parents[1] / 'templates/customer'
 customer_route = Blueprint('customer', __name__, template_folder=template_path)
 
-@customer_route.route('/list')
+@customer_route.route('/')
 def list_customers():
     '''Get all customers.'''
     _list = customer_service.get_customer()
@@ -24,7 +23,6 @@ def add():
 def add_customer():
     '''Add a new customer.'''
     if request.method == 'POST':
-
         _new_customer = CustomerRequest(**request.form)
         response = customer_service.add_customer(_new_customer)
         if response.status_code == 200:

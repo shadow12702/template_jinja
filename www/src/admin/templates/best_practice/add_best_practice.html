@@ -1,6 +1,4 @@
-{% include 'link.html' %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/best_practice/add_bp.css') }}" />
-  <div class="w-100">
+<div class="w-100">
     <!-- Main Content -->
     <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
       <!-- Include Font Awesome for icons -->
@@ -9,12 +7,12 @@
             <h1>Add New Best Practice</h1>
             <p>Create a new best practice configuration in the system</p>
           </div>
-          <a href="/admin?route=/best-practice" target="_parent"   class="btn btn-outline-secondary back-btn"><i class="fas fa-arrow-left"></i> Back to Best Practices</a>
+          <button onclick="window.location.href='/admin/best-practice/add'" class="btn btn-outline-secondary back-btn" ><i class="fas fa-arrow-left"></i> Back to Best Practices </button>
         </div>
 
         <!-- Form for adding new best practice -->
         <div class="form-container">
-          <form id="addBestPracticeForm" method="POST" action="{{ url_for('admin_route.best_practice_route.add_new_best_practice') }}">
+          <form id="addBestPracticeForm" method="POST" action="{{ url_for('base.admin.best_practice.add_new_best_practice') }}">
             {% if error %}
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <i class="fas fa-exclamation-circle me-2"></i> {{ error }}
@@ -24,7 +22,7 @@
 
             <div class="card shadow rounded">
               <div class="card-body">
-                <form id="addBestPracticeForm" method="get" action="{{ url_for('admin_route.best_practice_route.add_new_best_practice') }}">
+                <form id="addBestPracticeForm" method="get" action="{{ url_for('base.admin.best_practice.add_new_best_practice') }}">
                   <h5 class="mb-4">Best Practice Information</h5>
 
                   <div class="row">
@@ -64,7 +62,7 @@
                   </div>
 
                   <div class="text-end mt-4">
-                    <a href="/admin?route=/best-practice" target="_parent" class="btn btn-outline-secondary me-2">Cancel</a>
+                    <button onclick="window.location.href='/admin/best-practice'" class="btn btn-outline-secondary me-2">Cancel</button>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-plus me-1"></i> Create</button>
                   </div>
                 </form>

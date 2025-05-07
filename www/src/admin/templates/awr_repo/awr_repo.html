@@ -1,5 +1,9 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='admin/css/awr_database/awr_database.css') }}">
-
+<link
+	rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/component.css') }}" />
 <div class="w-100">
     <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
         <div class="container-fluid p-4">
@@ -9,11 +13,6 @@
                     <div class="col">
                         <h1 class="page-title">AWR Database</h1>
                         <p class="page-subtitle">Manage and view AWR database records</p>
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-primary" id="addAwrBtn">
-                            <i class="fas fa-plus me-1"></i> Add AWR Record
-                        </button>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 # admin/service/patch_service.py
 
 from src.core.request import RequestHandler
-from admin.service import patch_service
 from admin.model.response.patch_reponse import PatchResponse
 from admin.model.request.patch_request import PatchRequest
     
