@@ -12,11 +12,11 @@
                         </a>
                 {% else %}
                     <a class="nav-link dropdown-toggle d-flex align-items-center menu-toggle"
-                       data-bs-toggle="collapse"
-                       href="#submenu-{{ item.code|replace(' ', '-')|lower }}"
-                       role="button"
-                       aria-expanded="false"
-                       aria-controls="submenu-{{ item.code|replace(' ', '-')|lower }}">
+                        data-bs-toggle="collapse"
+                        href="#submenu-{{ item.code|replace(' ', '-')|lower }}"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="submenu-{{ item.code|replace(' ', '-')|lower }}">
                         <i class="{{ item.icon }}"></i>
                         {% if not is_sidebar_collapsed %}
                             <span>{{ item.name }}</span>

@@ -1,64 +1,91 @@
+{% extends 'iframe_base.html' %}
+
+{% block content %}
 <div class="w-100">
-    <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
-        <div class="container-fluid p-4">
-            <!-- Page Header -->
-            <div class="page-header mb-4">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h1 class="page-title">Patches Management</h1>
-                        <p class="page-subtitle">Track and manage database patch information</p>
-                    </div>
-                    <div class="col-auto">
-                        <div class="col-auto">       
-                            <button onclick="window.location.href='/admin/db-patch/add'">Add Patch</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Patches Table -->
-            <div class="card custom-card">
-                <div class="table-responsive">
-                    <table class="table custom-table" id="patchesTable">
-                        <thead>
-                            <tr>
-                                <th class="sortable" data-sort="id">Patch ID <i class="fas fa-sort"></i></th>
-                                <th class="sortable" data-sort="type">Patch Type <i class="fas fa-sort"></i></th>
-                                <th class="sortable" data-sort="type2">Type <i class="fas fa-sort"></i></th>
-                                <th class="sortable" data-sort="version">DB Version <i class="fas fa-sort"></i></th>
-                                <th class="sortable" data-sort="format">Format <i class="fas fa-sort"></i></th>
-                                <th class="sortable" data-sort="root">Patch Root <i class="fas fa-sort"></i></th>
-                                <th class="sortable" data-sort="ru">Fixed in RU <i class="fas fa-sort"></i></th>
-                                <th class="sortable" data-sort="mrp">Fixed in MRP <i class="fas fa-sort"></i></th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for patch in patches %}
-                            {% if patch.patch_type and patch.patch_id %}
-                            <tr data-version="{{ patch.db_version }}">
-                                <td class="patch-id">{{ patch.patch_id }}</td>
-                                <td>
-                                    <span class="patch-type-badge">{{ patch.patch_type }}</span>
-                                </td>
-                                <td>{{ patch.type }}</td>
-                                <td>
-                                    <span class="db-version-badge">{{ patch.db_version }}</span>
-                                </td>
-                                <td>{{ patch.format }}</td>
-                                <td>{{ patch.root }}</td>
-                                <td>{{ patch.ru_fixed or '' }}</td>
-                                <td>{{ patch.mrp_fixed or '' }}</td>
-                                <td class="description-cell" title="{{ patch.description }}">
-                                    {{ (patch.description[:30] + '...') if patch.description and (patch.description|length > 30) else (patch.description or '-') }}
-                                </td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <!--Pagination -->
-            </div>
-        </div>
-    </div>
+	<div
+		class="col-12 content-area p-0"
+		style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden">
+		<div class="container-fluid p-4">
+			<!-- Page Header -->
+			<div class="page-header mb-4">
+				<div class="row align-items-center">
+					<div class="col">
+						<h1 class="page-title">Patches Management</h1>
+						<p class="page-subtitle">
+							Track and manage database patch information
+						</p>
+					</div>
+					<div class="col-auto">
+						<div class="col-auto">
+							<button onclick="window.location.href='/admin/db-patch/add'"class="btn btn-primary">
+								Add Patch
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Patches Table -->
+			<div class="card custom-card">
+				<div class="table-responsive">
+					<table class="table custom-table" id="patchesTable">
+						<thead>
+							<tr>
+								<th class="sortable" data-sort="id">
+									Patch ID <i class="fas fa-sort"></i>
+								</th>
+								<th class="sortable" data-sort="type">
+									Patch Type <i class="fas fa-sort"></i>
+								</th>
+								<th class="sortable" data-sort="type2">
+									Type <i class="fas fa-sort"></i>
+								</th>
+								<th class="sortable" data-sort="version">
+									DB Version <i class="fas fa-sort"></i>
+								</th>
+								<th class="sortable" data-sort="format">
+									Format <i class="fas fa-sort"></i>
+								</th>
+								<th class="sortable" data-sort="root">
+									Patch Root <i class="fas fa-sort"></i>
+								</th>
+								<th class="sortable" data-sort="ru">
+									Fixed in RU <i class="fas fa-sort"></i>
+								</th>
+								<th class="sortable" data-sort="mrp">
+									Fixed in MRP <i class="fas fa-sort"></i>
+								</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for patch in patches %} {% if patch.patch_type and
+							patch.patch_id %}
+							<tr data-version="{{ patch.db_version }}">
+								<td class="patch-id">{{ patch.patch_id }}</td>
+								<td>
+									<span class="patch-type-badge">{{ patch.patch_type }}</span>
+								</td>
+								<td>{{ patch.type }}</td>
+								<td>
+									<span class="db-version-badge">{{ patch.db_version }}</span>
+								</td>
+								<td>{{ patch.format }}</td>
+								<td>{{ patch.root }}</td>
+								<td>{{ patch.ru_fixed or '' }}</td>
+								<td>{{ patch.mrp_fixed or '' }}</td>
+								<td class="description-cell" title="{{ patch.description }}">
+									{{ (patch.description[:30] + '...') if patch.description and
+									(patch.description|length > 30) else (patch.description or
+									'-') }}
+								</td>
+							</tr>
+							{% endif %} {% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<!--Pagination -->
+			</div>
+		</div>
+	</div>
 </div>
+{%endblock %}

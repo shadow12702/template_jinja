@@ -13,7 +13,7 @@ class LineChart(Chart):
             line.add_xaxis(categories)
             for column in self.chart_model.y_axis:
                 line.add_yaxis(column, new_df[column].to_list(),
-                               label_opts=opts.LabelOpts(is_show=show_label),)
+                                label_opts=opts.LabelOpts(is_show=show_label),)
             if horizontal:
                 line.reversal_axis()
                 
