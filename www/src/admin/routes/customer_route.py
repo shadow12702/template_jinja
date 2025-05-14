@@ -8,7 +8,7 @@ from pathlib import Path
 template_path = Path(__file__).resolve().parents[1] / 'templates/customer'
 customer_route = Blueprint('customer', __name__, template_folder=template_path)
 
-@customer_route.route('/')
+@customer_route.route('/list')
 def list_customers():
     '''Get all customers.'''
     _list = customer_service.get_customer()
@@ -26,7 +26,7 @@ def add_customer():
         _new_customer = CustomerRequest(**request.form)
         response = customer_service.add_customer(_new_customer)
         if response.status_code == 200:
-            return redirect(url_for('customer.list_customers'))
+            return redirect(url_for('base.admin.customer.list_customers'))
         else:
             error_message = response.json().get('message', 'Failed to add customer')
             return render_template('add_customer.html', error=error_message)
@@ -39,26 +39,26 @@ def update(code):
     if customer:
         return render_template('update_customer.html', customer=customer)
     else:
-        return redirect(url_for('customer.list_customers'))
+        return redirect(url_for('base.admin.customer.list_customers'))
 
-@customer_route.route('/update_customer', methods=['POST'])
-def update_customer():
+@customer_route.route('/update_customer/<code>', methods=['POST'])
+def update_customer(code):
     '''Update customer information.'''
     if request.method == 'POST':
         _update_customer = CustomerRequest(**request.form)
-        response = customer_service.update_customer(_update_customer)
-        if response.status_code == 200:
-            return redirect(url_for('customer.list_customers'))
+        response = customer_service.update_customer(code , _update_customer)
+        if response.status_code == 200 :
+            return redirect(url_for('base.admin.customer.list_customers'))
         else:
             error_message = response.json().get('message', 'Failed to update customer')
             return render_template('update_customer.html', error=error_message)
-    return redirect(url_for('customer.list_customers'))
+    return redirect(url_for('base.admin.customer.list_customers'))
 
-@customer_route.route('/detail/<code>')
+@customer_route.route('/detail/<code>', methods=['GET','POST'])
 def detail(code):
     '''Get customer details.'''
     customer = customer_service.get_customer_by_code(code)
     if customer:
         return render_template('detail.html', customer=customer)
     else:
-        return redirect(url_for('customer.list_customers'))
+        return redirect(url_for('base.admin.customer.list_customers'))

@@ -9,14 +9,14 @@ best_practice_route = Blueprint('best_practice', __name__, template_folder=templ
 
 #---------------------------------------Get Best all Practice----------------------------#
 
-@best_practice_route.route("/")
+@best_practice_route.route("/list")
 def best_practice_management():
     _list = best_practice_service.get_best_practices()    
     return render_template("best_practices.html", best_practices=_list)
 
 #---------------------------------------Add Best Practice----------------------------#
 
-@best_practice_route.route("/add_best_practice")
+@best_practice_route.route("/add")
 def add_best_practice():
     return render_template("add_best_practice.html")
 
@@ -33,20 +33,19 @@ def add_new_best_practice():
 
 #--------------------------------------Detail Best Practice----------------------------#
 
-@best_practice_route.route("/detail_best_practice/<id>")
+@best_practice_route.route("/detail/<id>")
 def detail_best_practice(id):
     best_practice = best_practice_service.get_best_practice_by_id(id)
-    return render_template("detail.html", best_practice=best_practice)
+    return render_template("detail_best.html", best_practice=best_practice)
 
 #---------------------------------------Edit Best Practice----------------------------#
 
-@best_practice_route.route("/update_info_best_practice", methods=["GET", "POST"])
-def update_best_practice():
-    id = request.form.get("id")
-    _update_best_practice = BestPracticeRequest( **request.form())
+@best_practice_route.route("/update_info_best_practice/<id>", methods=["GET", "POST"])
+def update_best_practice(id):
+    _update_best_practice = BestPracticeRequest(**request.form)
     response = best_practice_service.update_best_practice_action(id, _update_best_practice)
     if response.status_code == 200:
-        return redirect(url_for("admin_route.admin", route="/best-practice"))
+        return redirect(url_for("base.admin.best_practice.best_practice_management", route="/best-practice"))
     else:
         best_practice = best_practice_service.get_best_practice_by_id(id)
-        return render_template("detail.html", best_practice=best_practice,error=f"Lỗi khi cập nhật best practice: {response.text}")
+        return render_template("detail_best.html", best_practice=best_practice,error=f"Lỗi khi cập nhật best practice: {response.text}")

@@ -1,8 +1,8 @@
 {
-	"api_url": {
-		"host": "http://127.0.0.1",
-		"port": 5000
-	},
-	"version": "v1.0",
-	"secret_key": "eba7LGmAcdHATN6Z00qsFO8bp4Ywyob&"
+    "api_url": {
+        "host": "http://192.168.1.221",
+        "port": 5000
+    },
+    "version": "v1.0",
+    "secret_key": "eba7LGmAcdHATN6Z00qsFO8bp4Ywyob&"
 }

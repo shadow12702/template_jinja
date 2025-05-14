@@ -18,8 +18,7 @@ class FakeData:
         """
 
         items = ['Laptop', 'Smartphone', 'Tablet', 'Headphones', 'Smartwatch']
-        cities = ['New York', 'London', 'Tokyo', 'Paris', 'Sydney']
-
+        cities = ['New York', 'London', 'Tokyo', 'Paris', 'Sydney'] # Random IDs for items
         start_date = datetime(start_year, 1, 1)
         end_date = datetime(end_year, 12, 31)
         date_range = pd.date_range(start_date, end_date, freq='MS')  # Month start frequency
@@ -28,9 +27,11 @@ class FakeData:
         for date in date_range:
             for item in items:
                 for city in cities:
-                    cost = random.randint(100, 1000)
-                    revenue = cost * (1 + random.uniform(0.2, 1.5))  # Revenue is cost + random profit
-                    data.append({
+                    # Random number of entries per item per city
+                        cost = random.randint(100, 1000)
+                        revenue = cost * (1 + random.uniform(0.2, 1.5))  # Revenue is cost + random profit
+                        data.append({
+                        "id": id,
                         'Date': date,
                         'Item': item,
                         'City': city,
@@ -40,4 +41,3 @@ class FakeData:
 
         df = pd.DataFrame(data)
         return df
-    

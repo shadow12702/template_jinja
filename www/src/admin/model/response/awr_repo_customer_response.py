@@ -4,6 +4,7 @@ from datetime import datetime
 from pydantic import BaseModel
 
 class AwrRepoCustomerResponse(BaseModel):
+    customer_code: str 
     dbid: int = 0
     database_name: str
     version: str

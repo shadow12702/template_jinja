@@ -24,7 +24,7 @@ class RequestHandler:
             if token:
                 headers.update({'Authorization': f"Bearer {token}"})
             url = f'{app_config.apiUrl}/{app_config.version}{endpoint}'
-            response = requests.get(url, headers)
+            response = requests.get(url, headers=headers)
             return response
         except Exception as ex:
             raise ex

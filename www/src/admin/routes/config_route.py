@@ -6,7 +6,7 @@ template_path = Path(__file__).resolve().parents[1] / 'templates/config'
 config_route = Blueprint('config', __name__, template_folder=template_path)
 
 # Routes
-@config_route.route("/")
+@config_route.route("/list")
 def config_management():
     _list = config_service.get_all_configs()
     return render_template("config.html", configs=_list)

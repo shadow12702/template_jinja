@@ -1,0 +1,91 @@
+/* static/css/custom_charts.css */
+
+/* Kiểu chung cho tất cả biểu đồ */
+.chart-container {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 20px 0;
+    padding: 15px;
+    background: #fff;
+}
+
+.chart-container:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+/* Định dạng tiêu đề */
+.chart-container .echarts-title {
+    font-weight: 700 !important;
+    color: #333;
+    margin-bottom: 20px !important;
+}
+
+/* Định dạng trục */
+.chart-container .echarts-axis-line {
+    stroke: #888 !important;
+    stroke-width: 1.5px !important;
+}
+
+.chart-container .echarts-axis-label {
+    fill: #555 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+
+.chart-container .echarts-grid-line {
+    stroke: #eee !important;
+    stroke-width: 1px !important;
+    stroke-dasharray: 3,3 !important;
+}
+
+/* Định dạng tooltip */
+.chart-container .echarts-tooltip {
+    background-color: rgba(50, 50, 50, 0.9) !important;
+    border: none !important;
+    border-radius: 5px !important;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4) !important;
+    padding: 10px !important;
+}
+
+/* Định dạng chú thích */
+.chart-container .echarts-legend {
+    padding: 10px !important;
+}
+
+.chart-container .echarts-legend-item {
+    margin-right: 15px !important;
+}
+
+.chart-container .echarts-legend-text {
+    fill: #333 !important;
+}
+
+/* Các kiểu dáng cho từng loại biểu đồ */
+/* Biểu đồ đường */
+.line-chart .echarts-line {
+    stroke-width: 3px !important;
+    stroke-linecap: round !important;
+}
+
+/* Biểu đồ cột */
+.bar-chart .echarts-bar {
+    rx: 5 !important; /* Góc bo tròn cho cột */
+    ry: 5 !important;
+    stroke-width: 0 !important;
+    opacity: 0.9 !important;
+}
+
+/* Biểu đồ tròn */
+.pie-chart .echarts-pie-slice {
+    stroke: #fff !important;
+    stroke-width: 2px !important;
+    transition: transform 0.3s;
+}
+
+.pie-chart .echarts-pie-slice:hover {
+    transform: scale(1.03);
+}

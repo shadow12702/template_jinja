@@ -1,79 +1,94 @@
+{% extends 'iframe_base.html' %}
+
+{% block content %}
 <div class="w-100">
-    <!-- Main Content -->
-    <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
-      <!-- Include Font Awesome for icons -->
-        <div class="page-header d-flex justify-content-between align-items-center">
-          <div>
-            <h1>Add New Best Practice</h1>
-            <p>Create a new best practice configuration in the system</p>
-          </div>
-          <button onclick="window.location.href='/admin/best-practice/add'" class="btn btn-outline-secondary back-btn" ><i class="fas fa-arrow-left"></i> Back to Best Practices </button>
-        </div>
-
-        <!-- Form for adding new best practice -->
-        <div class="form-container">
-          <form id="addBestPracticeForm" method="POST" action="{{ url_for('base.admin.best_practice.add_new_best_practice') }}">
-            {% if error %}
-              <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle me-2"></i> {{ error }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            {% endif %}
-
-            <div class="card shadow rounded">
-              <div class="card-body">
-                <form id="addBestPracticeForm" method="get" action="{{ url_for('base.admin.best_practice.add_new_best_practice') }}">
-                  <h5 class="mb-4">Best Practice Information</h5>
-
-                  <div class="row">
-                    <div class="col-md-6 mb-3">
-                      <label for="db_version" class="form-label">DB Version <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="db_version" name="db_version" placeholder="e.g., 19c" required />
-                    </div>  
-
-                    <div class="col-md-6 mb-3">
-                      <label for="parameter" class="form-label">Parameter <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="parameter" name="parameter" placeholder="e.g., optimizer_mode" required />
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                      <label for="param_default_value" class="form-label">Default Value <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="param_default_value" name="param_default_value" placeholder="e.g., ALL_ROWS" required />
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                      <label for="param_recommend_value" class="form-label">Recommended Value <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="param_recommend_value" name="param_recommend_value" placeholder="e.g., CHOOSE" required />
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                      <label for="param_recommend_value" class="form-label">For RAC Only <span class="text-danger">*</span></label>
-                      <select class="form-select" id="param_recommend_value" name="param_recommend_value" required>
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <!-- Full width Notes field -->
-                  <div class="mb-3">
-                    <label for="notes" class="form-label">Notes</label>
-                    <textarea class="form-control" id="notes" name="notes" rows="4" placeholder="e.g., Meaning: Removes unused space"></textarea>
-                  </div>
-
-                  <div class="text-end mt-4">
-                    <button onclick="window.location.href='/admin/best-practice'" class="btn btn-outline-secondary me-2">Cancel</button>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus me-1"></i> Create</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </form>
-        </div>
+  <!-- Main Content -->
+  <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
+    <!-- Include Font Awesome for icons -->
+    <div class="page-header d-flex justify-content-between align-items-center">
+      <div>
+        <h1>Add New Best Practice</h1>
+        <p>Create a new best practice configuration in the system</p>
       </div>
+      <button onclick="window.location.href='/admin/best-practice/list'" class="btn btn-outline-secondary back-btn"><i
+          class="fas fa-arrow-left"></i> Back to Best Practices</button>
     </div>
 
-  {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  {% endblock %}
+    <!-- Form for adding new best practice -->
+    <div class="form-container">
+      <form id="addBestPracticeForm" method="POST"
+        action="{{ url_for('base.admin.best_practice.add_new_best_practice') }}">
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas fa-exclamation-circle me-2"></i> {{ error }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
+        <div class="card shadow rounded">
+          <div class="card-body">
+            <form id="addBestPracticeForm" method="get"
+              action="{{ url_for('base.admin.best_practice.add_new_best_practice') }}">
+              <h5 class="mb-4">Best Practice Information</h5>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="db_version" class="form-label">DB Version <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="db_version" name="db_version" placeholder="e.g., 19c"
+                    required />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="parameter" class="form-label">Parameter <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="parameter" name="parameter"
+                    placeholder="e.g., optimizer_mode" required />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="param_default_value" class="form-label">Default Value <span
+                      class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="param_default_value" name="param_default_value"
+                    placeholder="e.g., ALL_ROWS" required />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="param_recommend_value" class="form-label">Recommended Value <span
+                      class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="param_recommend_value" name="param_recommend_value"
+                    placeholder="e.g., CHOOSE" required />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="param_recommend_value" class="form-label">For RAC Only <span
+                      class="text-danger">*</span></label>
+                  <select class="form-select" id="param_recommend_value" name="param_recommend_value" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Full width Notes field -->
+              <div class="mb-3">
+                <label for="notes" class="form-label">Notes</label>
+                <textarea class="form-control" id="notes" name="notes" rows="4"
+                  placeholder="e.g., Meaning: Removes unused space"></textarea>
+              </div>
+
+              <div class="text-end mt-4">
+                <button onclick="window.location.href='/admin/best-practice/list'" type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-plus me-1"></i> Create</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}

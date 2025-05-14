@@ -1,7 +1,6 @@
 # app/service/chart_service.py
 
 from core.request import RequestHandler
-from apps.model.response.chart_response import ChartResponse
 
 def get_chart_data(endpoint:str, customer_code: str, dbid: int):
     """
@@ -12,8 +11,8 @@ def get_chart_data(endpoint:str, customer_code: str, dbid: int):
         "dbid": dbid
     }
     return  RequestHandler.post(endpoint, 
-                                         data=data_request, 
-                                         headers={"Content-Type": "application/json"})
+                                data=data_request, 
+                                headers={"Content-Type": "application/json"})
     
 
 

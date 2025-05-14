@@ -34,7 +34,7 @@ def get_customer_by_code(code: str):
     try:
         if not code:
             raise ValueError("Code cannot be empty")
-        response = RequestHandler.post(f'/customer/show/{code}', headers={"Content-Type": "application/json"})
+        response = RequestHandler.get(f'/customer/show/{code}', headers={"Content-Type": "application/json"})
         if response.status_code == 200:
             return CustomerResponse(**response.json())
         return None
@@ -53,7 +53,7 @@ def add_customer(customer: CustomerRequest):
     except Exception as e:
         raise e
     
-def update_customer(customer: CustomerRequest):
+def update_customer(code , customer: CustomerRequest):
     """
     Update customer information.
     """
@@ -61,7 +61,7 @@ def update_customer(customer: CustomerRequest):
         if not customer:
             raise ValueError("Customer cannot be empty")
 
-        response = RequestHandler.post(f'/customer/update', data=customer.model_dump(), headers={"Content-Type": "application/json"})
+        response = RequestHandler.put(f'/customer/update/{code}', data=customer.model_dump(), headers={"Content-Type": "application/json"})
         return response
     except Exception as e:
         raise e

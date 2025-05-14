@@ -7,13 +7,13 @@ template_path = Path(__file__).resolve().parents[1] / 'templates/patch'
 patch_route = Blueprint('db_patch', __name__, template_folder=template_path)
 
 # Route chính quản lý patch
-@patch_route.route("/")
+@patch_route.route("/list")
 def patches_management():
     _list = patch_service.get_patches()
     return render_template("patches.html", patches=_list)
 
 # Route hiển thị form thêm patch
-@patch_route.route("/add_patch")
+@patch_route.route("/add")
 def add_patch():
     return render_template("add_patch.html")
 

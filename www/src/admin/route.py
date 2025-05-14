@@ -12,7 +12,7 @@ template_path = Path(__file__).resolve().parents[0] / 'templates'
 admin_route = Blueprint('admin', __name__, template_folder=template_path)
 
 admin_route.register_blueprint(customer_route, url_prefix='/customer')
-admin_route.register_blueprint(awr_repo_route, url_prefix='/awr-db')
+admin_route.register_blueprint(awr_repo_route, url_prefix='/awr-repo')
 admin_route.register_blueprint(best_practice_route, url_prefix='/best-practice')
 admin_route.register_blueprint(patch_route, url_prefix='/db-patch')
 admin_route.register_blueprint(config_route, url_prefix='/config')

@@ -41,9 +41,7 @@
                                     </div>
                                 </td>
                                 <td class="actions-cell">
-                                    <a href="#" target="main-content" class="action-btn edit-btn" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                                    <button onclick="window.location.href='/admin/customer/detail/{{customer.code}}'" class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                                     <button class="action-btn delete-btn" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" 
                                             onclick="setDeleteTarget('{{ customer.name }}', '{{ customer.code }}')" title="Delete">
                                         <i class="fas fa-trash-alt"></i>

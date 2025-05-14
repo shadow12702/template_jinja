@@ -22,7 +22,6 @@
                 <table class="table custom-table" id="bestPracticeTable">
                     <thead>
                         <tr>
-                            <th class="id-col " data-sort="id">ID </th>
                             <th class="parameter-col " data-sort="parameter">Parameter </th>
                             <th class="value-col " data-sort="default">Default Value </th>
                             <th class="value-col " data-sort="recommended">Recommended Value </th>
@@ -36,7 +35,6 @@
                         {% if best_practices %}
                             {% for bp in best_practices %}
                             <tr data-rac="{{ bp.BPForRacOnly }}" data-version="{{ bp.db_version }}">
-                                <td>{{ bp.id }}</td>
                                 <td class="parameter-cell">{{ bp.parameter }}</td>
                                 <td><code class="default-value">{{ bp.param_default_value }}</code></td>
                                 <td><code class="recommended-value">{{ bp.param_recommend_value }}</code></td>
@@ -52,7 +50,7 @@
                                     {{ (bp.notes[:20] + '...') if bp.notes and (bp.notes|length > 20) else (bp.notes or '-') }}
                                 </td>
                                 <td class="actions-cell">
-                                    <button onclick="window.location.href='/admin/best-practice/update_info_best_practice'" class="action-btn edit-btn" > Edit</button>
+                                    <button onclick="window.location.href='/admin/best-practice/detail/{{bp.id}}'" class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                                     <button class="action-btn delete-btn" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" 
                                             data-best-practice-id="{{ bp.id }}" data-best-practice-parameter="{{ bp.parameter }}" title="Delete">
                                         <i class="fas fa-trash-alt"></i>

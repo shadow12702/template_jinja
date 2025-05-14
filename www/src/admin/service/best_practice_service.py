@@ -15,8 +15,8 @@ def get_best_practices():
 def get_best_practice_by_id(id):
     response = RequestHandler.get(f"/best-practice/show/{id}", headers={"Content-Type": "application/json"})
     if response.status_code == 200:
-        best_practice = [BestPracticeResponse(**item) for item in response.json()]
-        return best_practice
+        data = response.json()
+        return data[0]
     return []
 
 
@@ -32,4 +32,3 @@ def update_best_practice_action(id, best_practice_request: BestPracticeRequest):
     data = best_practice_request.dict()
     response = RequestHandler.put(f"/best-practice/update/{id}", data=data, headers={"Content-Type": "application/json"})
     return response
-

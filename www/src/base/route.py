@@ -1,6 +1,6 @@
 # base/route.py
 
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint,render_template, request, session, redirect, url_for
 from pathlib import Path
 from base.model.user_model import UserModel
 from base.service import menu_service
@@ -37,24 +37,17 @@ def render_layout(type:int = 0):
     else:
         return redirect(url_for('auth.login'))
     
-def authorize():
-    user = session.get('user')
-    if not user:
-        return redirect(url_for('auth.login'))
-    elif user["is_admin"] == False:
-        return render_layout(0)
-    return None
-admin_route.before_request(authorize)
-    
 @base_route.route('/')
 def index():
     return render_layout(0)
 
 @base_route.route('/admin')
 def admin():
-    result = authorize()
-    if result:
-        return result
+    user = session.get('user')
+    if not user:
+        return redirect(url_for('auth.login'))
+    elif user["is_admin"] == False:  
+        return redirect(url_for('base.index'))
     return render_layout(1)
 
 @base_route.route('/error')
