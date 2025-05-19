@@ -64,49 +64,53 @@
 					}
 				}
 
-                document.querySelectorAll(".menu-link, .submenu-link").forEach(link => {
-                    link.addEventListener("click", async function(e) {
-                        e.preventDefault();
-                        const route = this.getAttribute("data-route");
-                        const currentDatabase = getSelectedDatabase();
-                        const dataLink = this.getAttribute("data-link");
-                        if(!route) return;
-                        if(route.indexOf('/admin/') != 0){
-                            if (!currentDatabase) { 
-                                alert('Please select database first!');
-                                return; 
-                            }
+				document
+					.querySelectorAll(".menu-link, .submenu-link")
+					.forEach((link) => {
+						link.addEventListener("click", async function (e) {
+							e.preventDefault();
+							const route = this.getAttribute("data-route");
+							const currentDatabase = getSelectedDatabase();
+							const dataLink = this.getAttribute("data-link");
+							const dataChart = this.getAttribute("data-chart");
+							if (!route) return;
+							if (route.indexOf("/admin/") != 0) {
+								if (!currentDatabase) {
+									alert("Please select database first!");
+									return;
+								}
 
-                            ///create hiden form for submition
-                            const formData = new FormData();
-                            formData.append('database', JSON.stringify(currentDatabase));
-                            if(dataLink){
-                                formData.append('link', dataLink);
-                            }
-                            try{
-                                const response = await fetch(route, {
-                                    method: 'POST',
-                                    body: formData
-                                });
-                                const html = await response.text();
-                                const iframe = document.getElementById('app_container');
-                                iframe.srcdoc = html;
-                            }
-                            catch(error){
-                                console.error('Error: ', error);
-                            }                        
-                        }
-                        let newRoute = route;
-                        const iframeUrl = new URL(iframe.src);
-                        const currentPathWithQuery = iframeUrl.pathname ;
+								///create hiden form for submition
+								const formData = new FormData();
+								formData.append("database", JSON.stringify(currentDatabase));
+								if (dataLink) {
+									formData.append("link", dataLink);
+								}
+								if (dataChart) {
+									formData.append("chart", dataChart);
+								}
+								try {
+									const response = await fetch(route, {
+										method: "POST",
+										body: formData,
+									});
+									const html = await response.text();
+									const iframe = document.getElementById("app_container");
+									iframe.srcdoc = html;
+								} catch (error) {
+									console.error("Error: ", error);
+								}
+							}
+							let newRoute = route;
+							const iframeUrl = new URL(iframe.src);
+							const currentPathWithQuery = iframeUrl.pathname;
 
-                        if (newRoute !== currentPathWithQuery) {
-                            iframe.src = newRoute;
-                            sessionStorage.setItem('current_route', newRoute);
-                        }
-
-                    });
-                });
+							if (newRoute !== currentPathWithQuery) {
+								iframe.src = newRoute;
+								sessionStorage.setItem("current_route", newRoute);
+							}
+						});
+					});
 
 				iframe.addEventListener("load", function () {
 					sessionStorage.setItem("current_route", iframe.src);

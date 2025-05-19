@@ -13,7 +13,7 @@ class BarChart(Chart):
             bar.add_xaxis(categories)
             for column in self.chart_model.y_axis:
                 bar.add_yaxis(column, new_df[column].to_list(), stack='stacked' if stacked else None,
-                              label_opts=opts.LabelOpts(is_show=show_label),)
+                                label_opts=opts.LabelOpts(is_show=show_label),)   
             if horizontal:
                 bar.reversal_axis()
             

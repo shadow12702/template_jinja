@@ -15,8 +15,10 @@ def show_echart(chart_id):
     ''' show echart chart '''
     try:
         _database = json.loads(request.form.get('database'))
-        _endpoint = request.form.get('link', '')
-        chart_response = chart_service.get_chart_data(_endpoint, _database.get('customer_code',''), _database.get('dbid',0))
+        _type ,_endpoint = request.form.get('chart', ''), request.form.get('link', '')
+        if _type == '' :
+            return render_template("error.html", title=f"Error{e}")
+        chart_response = chart_service.get_chart_data(_endpoint, _type ,_database.get('customer_code',''), _database.get('dbid',0))
         if chart_response.status_code == 200:
             ds_json = chart_response.json()
             if ds_json:
@@ -40,14 +42,13 @@ def show_echart(chart_id):
         
     except Exception as e:
         return render_template("error.html", title=f"Error{e}")
-
 # import pandas as pd
 # from flask import Blueprint, render_template, request
 # from pathlib import Path
 # from components import echart as ec
 # from components.chart.chart_model import ChartModel, ChartSize
 # from sample.fake_data import FakeData
-# 0
+
 # template_path = Path(__file__).parent.parent / "templates"
 # echart_route = Blueprint('echart', __name__, template_folder=template_path)
 

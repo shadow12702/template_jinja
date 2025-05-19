@@ -33,7 +33,7 @@ def render_layout(type:int = 0):
             route = request.args.get('route', f"{side}/dashboard")
             template_name = 'index.html'            
         print(f"Route: {route}")
-        return render_template(template_name, user=user, route=route, menu=menu, side = side, customer=customer)
+        return render_template(template_name, user=user, route=route, menu=menu, side = side, customers=customer)
     else:
         return redirect(url_for('auth.login'))
     

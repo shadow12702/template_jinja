@@ -23,7 +23,7 @@
                             <i class="dropdown-icon fa fa-chevron-down ms-auto"></i>
                         {% endif %}
                     </a>
-
+                        
                     <ul class="submenu collapse ps-3" id="submenu-{{ item.code|replace(' ', '-')|lower }}">
                         {% for child in menu %}
                             {% if child.parent == item.code %}
@@ -34,14 +34,15 @@
                                         data-code="{{ child.code }}"
                                         href="javascript:void(0)" data-route="{{ side }}{{ child.prefix }}/{{ child.code }}" 
                                         data-link = "{{ child.route }}"
+                                        data-chart = "{{ child.data }}"
                                         >
                                         {{ child.name }}
                                     </a>
                                     <!-- {% else %}
                                         <a class="nav-link submenu-link"
-                                           data-parent="{{ item.code }}"
-                                           data-code="{{ child.code }}"
-                                             href="javascript:void(0)" data-route="/echarts/{{ child.code }}">                                              
+                                            data-parent="{{ item.code }}"
+                                            data-code="{{ child.code }}"
+                                                href="javascript:void(0)" data-route="/echarts/{{ child.code }}">                                              
                                             {{ child.name }}
                                         </a>
                                     {% endif %} -->

@@ -12,3 +12,4 @@ class MenuModel(BaseModel):
     route: str
     prefix: str = ''
     is_show: bool = True
+    data: str 
