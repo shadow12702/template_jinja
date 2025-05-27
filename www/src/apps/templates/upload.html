@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<title>Upload & Download Files</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 20px;
+			}
+			.upload-section {
+				margin-bottom: 30px;
+			}
+			.file-list {
+				margin-top: 20px;
+			}
+			.file-item {
+				padding: 8px;
+				border-bottom: 1px solid #ddd;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.download-btn {
+				background: #007bff;
+				color: white;
+				padding: 5px 10px;
+				text-decoration: none;
+				border-radius: 3px;
+			}
+			.download-btn:hover {
+				background: #0056b3;
+			}
+			.success-msg {
+				color: green;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Form Upload -->
+		<div class="upload-section">
+			<h2>Upload New File</h2>
+			<form method="post" enctype="multipart/form-data">
+				<input type="file" name="file" required />
+				<input type="submit" value="Upload" />
+			</form>
+
+			{% if success %}
+			<p class="success-msg">✓ File "{{name}}" uploaded successfully!</p>
+			{% endif %}
+		</div>
+
+		<!-- Danh sách tất cả file -->
+		<div class="file-list">
+			<h2>Available Files ({{ files|length }} files)</h2>
+
+			{% if files %} {% for file in files %}
+			<div class="file-item">
+				<span>📄 {{ file }}</span>
+				<a href="./download/{{ file }}" class="download-btn">Download</a>
+			</div>
+			{% endfor %} {% else %}
+			<p>No files available for download</p>
+			{% endif %}
+		</div>
+	</body>
+</html>

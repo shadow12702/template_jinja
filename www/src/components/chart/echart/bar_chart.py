@@ -18,7 +18,13 @@ class BarChart(Chart):
                 bar.reversal_axis()
             
             bar.set_global_opts(title_opts=opts.TitleOpts(title=self.chart_model.title),
-                                datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")], 
+                                toolbox_opts=opts.ToolboxOpts(is_show=True,
+                                                            feature={"dataView": {"readOnly": True},
+                                                                    "magicType": {"show": True, 
+                                                                                    "title": ["Biểu đồ đường", "Biểu đồ cột", "Xếp chồng"],
+                                                                                    "type": ["line", "bar","stack"]},
+                                                                    }),
+                                datazoom_opts=[opts.DataZoomOpts(), opts.DataZoomOpts(type_="inside")],
                                 legend_opts=opts.LegendOpts(is_show=self.chart_model.show_legend),
                                 xaxis_opts=opts.AxisOpts(is_show=self.chart_model.show_grid),
                                 yaxis_opts=opts.AxisOpts(is_show=self.chart_model.show_grid))
