@@ -2,6 +2,7 @@
 
 from flask import Blueprint, render_template , redirect, session, url_for
 from pathlib import Path
+from admin.routes.chart_model_route import chart_model_route
 from admin.routes.customer_route import customer_route
 from admin.routes.awr_repo_route import awr_repo_route
 from admin.routes.best_practice_route import best_practice_route
@@ -16,6 +17,7 @@ admin_route.register_blueprint(awr_repo_route, url_prefix='/awr-repo')
 admin_route.register_blueprint(best_practice_route, url_prefix='/best-practice')
 admin_route.register_blueprint(patch_route, url_prefix='/db-patch')
 admin_route.register_blueprint(config_route, url_prefix='/config')
+admin_route.register_blueprint(chart_model_route, url_prefix='/chart-model')
 
 
 @admin_route.route('/dashboard')

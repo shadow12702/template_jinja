@@ -1,0 +1,104 @@
+{% extends 'iframe_base.html' %}
+
+{% block content %}
+<div class="row m-0">
+	<div class="col-md-12 p-4">
+		<h3>Edit Chart Model</h3>
+		<form method="POST" action="/admin/chart-model/update_chart_model/{{ chart_model.Id }}">
+			<div class="row">
+				<!-- Title -->
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="title">Title <span class="text-danger">*</span></label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="title" name="title"
+								value="{{ chart_model.title }}" required>
+						</div>
+					</div>
+				</div>
+
+				<!-- Chart Key -->
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="chart_key">Chart Key <span class="text-danger">*</span></label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="chart_key" name="chart_key"
+								value="{{ chart_model.chart_key }}" required>
+						</div>
+					</div>
+				</div>
+
+				<!-- Type -->
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="type">Type <span class="text-danger">*</span></label>
+						<div class="input-group">
+							<select class="form-control" id="type" name="type" required>
+								<option value="line" {{ 'selected' if chart_model.type=='line' else '' }}>Line</option>
+								<option value="pie" {{ 'selected' if chart_model.type=='pie' else '' }}>Pie</option>
+								<option value="bar" {{ 'selected' if chart_model.type=='bar' else '' }}>Bar</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<!-- X Axis -->
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="x_axis">X-Axis <span class="text-danger">*</span></label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="x_axis" name="x_axis"
+								value="{{ chart_model.x_axis }}" required>
+						</div>
+					</div>
+				</div>
+
+				<!-- Y Axis -->
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="y_axis">Y-Axis <span class="text-danger">*</span></label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="y_axis" name="y_axis"
+								value="{{ chart_model.y_axis }}" required>
+						</div>
+					</div>
+				</div>
+
+				<!-- Checkboxes -->
+				{% set options = [
+				{'id': 'show_legend', 'label': 'Show Legend'},
+				{'id': 'show_tooltip', 'label': 'Show Tooltip'},
+				{'id': 'show_grid', 'label': 'Show Grid'},
+				{'id': 'show_x_axis', 'label': 'Show X Axis'},
+				{'id': 'show_y_axis', 'label': 'Show Y Axis'},
+				{'id': 'show_x_label', 'label': 'Show X Label'},
+				{'id': 'show_y_label', 'label': 'Show Y Label'}
+				] %}
+				{% for opt in options %}
+				<div class="col-md-3">
+					<div class="form-group form-check mt-4">
+						<input type="checkbox" class="form-check-input" id="{{ opt.id }}" name="{{ opt.id }}"
+							value="true" {{ 'checked' if chart_model[opt.id] else '' }}>
+						<label class="form-check-label" for="{{ opt.id }}">{{ opt.label }}</label>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+
+			<div class="mt-4">
+				<button type="submit" class="btn btn-primary">Update</button>
+				<button type="button" class="btn btn-outline-secondary me-2"
+					onclick="window.location.href='/admin/chart-model/list'">
+					Cancel
+				</button>
+			</div>
+		</form>
+
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}

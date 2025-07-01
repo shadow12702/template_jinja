@@ -5,5 +5,5 @@ class BestPracticeRequest(BaseModel):
     parameter: str
     param_default_value: str
     param_recommend_value: str
-    for_rac_only: int
+    for_rac_only: bool
     notes: str = None

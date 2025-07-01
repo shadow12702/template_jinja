@@ -3,6 +3,7 @@ from flask import Blueprint, json, render_template, request
 from pathlib import Path
 from apps.service import chart_service
 from apps.model.response.chart_response import ChartResponse
+from apps.model.request.db_request import DbRequest
 from components import echart as ec
 
 template_path = Path(__file__).parent.parent / "templates"
@@ -14,9 +15,12 @@ echart_route = Blueprint('echart', __name__, template_folder=template_path)
 def show_echart(chart_id):
     ''' show echart chart '''
     try:
-        _database = json.loads(request.form.get('database'))
-        _type ,_endpoint = request.form.get('chart', ''), request.form.get('link', '')
-        chart_response = chart_service.get_chart_data(_endpoint, _type ,_database.get('customer_code',''), _database.get('dbid',0))
+        _db_request = DbRequest(**json.loads(request.form.get('database')))        
+        _type = request.form.get('chart', '')
+        _endpoint = request.form.get('link', '')
+        if _type == '' :
+            return render_template("error.html", title=f"Error{e}")
+        chart_response = chart_service.get_chart_data(_endpoint, _db_request, _type )
         if chart_response.status_code == 200:
             ds_json = chart_response.json()
             if ds_json:

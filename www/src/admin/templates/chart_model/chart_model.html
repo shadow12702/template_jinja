@@ -1,0 +1,177 @@
+{% extends 'iframe_base.html' %}
+
+{% block content %}
+<style>
+
+</style>
+<div class="w-100">
+    <div class="col-12 content-area p-0" style="flex-grow: 1; transition: width 0.3s ease-in-out; overflow: hidden;">
+        <div class="container-fluid p-4">
+            <!-- Page Header -->
+            <div class="page-header mb-4">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h1 class="page-title">Chart Model</h1>
+                        <p class="page-subtitle">Track and manage customer information</p>
+                    </div>
+                    <div class="col-auto">
+                        <!-- <button onclick="window.location.href='/admin/customer/add'" class="btn btn-primary">Add Model</button> -->
+                        <button onclick="window.location.href='/admin/chart-model/add'" class="btn btn-primary">Add Model</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Table -->
+            <div class="card custom-card">
+                <div class="table-responsive">
+                    <table class="table custom-table" id="customerTable">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="id">id</th>
+                                <th class="sortable" data-sort="chart_key">chart_key</th>
+                                <th class="sortable" data-sort="Type">Type</i></th>
+                                <th class="sortable" data-sort="Title">Title</i></th>
+                                <th class="sortable" data-sort="X-Axis">X-Axis</i></th>
+                                <th class="sortable" data-sort="Y-Axis">Y-Axis</i></th>
+                                <th class="sortable" data-sort="show_legend">show_legend</i></th>
+                                <th class="sortable" data-sort="show_tooltip">show_tooltip</i></th>
+                                <th class="sortable" data-sort="show_grid">show_grid</i></th>
+                                <th class="sortable" data-sort="show_x_axis">show_x_axis</i></th>
+                                <th class="sortable" data-sort="show_y_axis">show_y_axis</i></th>
+                                <th class="sortable" data-sort="show_X_label">show_X_label</i></th>
+                                <th class="sortable" data-sort="show_Y_label">show_Y_label</i></th>
+                                <th class="">Actions</th>
+                            </tr>
+                        </thead>
+<tbody>
+    {% for chart_model in chart_models %}
+    <tr>
+        <td>{{ chart_model.Id }}</td>
+        <td>{{ chart_model.chart_key }}</td>
+        <td>{{ chart_model.type }}</td>
+        <td>{{ chart_model.title }}</td>
+        <td>{{ chart_model.x_axis }}</td>
+        <td>{{ chart_model.y_axis }}</td>
+
+        <td style="text-align: center;">
+            {% if chart_model.show_legend %}
+                <i class="fas fa-check-square text-success"></i>
+            {% else %}
+                <i class="far fa-square text-muted"></i>
+            {% endif %}
+        </td>
+        <td style="text-align: center;">
+            {% if chart_model.show_tooltip %}
+                <i class="fas fa-check-square text-success"></i>
+            {% else %}
+                <i class="far fa-square text-muted"></i>
+            {% endif %}
+        </td>
+        <td style="text-align: center;">
+            {% if chart_model.show_grid %}
+                <i class="fas fa-check-square text-success"></i>
+            {% else %}
+                <i class="far fa-square text-muted"></i>
+            {% endif %}
+        </td>
+        <td style="text-align: center;">
+            {% if chart_model.show_x_axis %}
+                <i class="fas fa-check-square text-success"></i>
+            {% else %}
+                <i class="far fa-square text-muted"></i>
+            {% endif %}
+        </td>
+        <td style="text-align: center;">
+            {% if chart_model.show_y_axis %}
+                <i class="fas fa-check-square text-success"></i>
+            {% else %}
+                <i class="far fa-square text-muted"></i>
+            {% endif %}
+        </td>
+        <td style="text-align: center;">
+            {% if chart_model.show_x_label %}
+                <i class="fas fa-check-square text-success"></i>
+            {% else %}
+                <i class="far fa-square text-muted"></i>
+            {% endif %}
+        </td>
+        <td style="text-align: center;">
+            {% if chart_model.show_y_label %}
+                <i class="fas fa-check-square text-success"></i>
+            {% else %}
+                <i class="far fa-square text-muted"></i>
+            {% endif %}
+        </td>
+        
+        <td class="actions-cell">
+            <button onclick="window.location.href='/admin/chart-model/detail/{{chart_model.Id}}'" class="action-btn edit-btn">
+                <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn delete-btn" data-bs-toggle="modal" 
+                    data-bs-target="#deleteConfirmModal" data-id="{{ chart_model.Id }}" title="Delete">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i> This action cannot be undone.
+                </div>
+                <p>Are you sure you want to delete customer <strong id="customer-name"></strong>?</p>
+                <p>All associated data will be removed permanently.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteChartModelForm" action="" method="POST"
+                    class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt me-1"></i> Delete Permanently
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteModal = document.getElementById('deleteConfirmModal');
+    const deleteForm = document.getElementById('deleteChartModelForm');
+    const customerName = document.getElementById('customer-name');
+
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Button that triggered the modal
+        const id = button.getAttribute('data-id');
+        const name = button.getAttribute('data-name') || 'this item';
+        // Hiển thị tên (nếu có)
+        customerName.textContent = name;
+        // Gán action của form
+        deleteForm.action = `/admin/chart-model/delete/${id}`;
+    });
+});
+</script>
+
+{% endblock %}

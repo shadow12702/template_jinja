@@ -9,7 +9,7 @@ class ChartModel(BaseModel):
     id: str
     type: str 
     title: str
-    x_axis: str
+    x_axis: List[str]
     y_axis: List[str]
     show_title: bool = True
     show_legend: bool = True

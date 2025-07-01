@@ -38,15 +38,113 @@
 						width="100%"
 						height="100%"
 						style="border: none"></iframe>
-					{% endblock %}
+					{% endblock %} {% include 'notification.html' %}
 				</div>
 			</div>
 		</div>
 
 		<!--  JS -->
+
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="{{ url_for('static', filename='js/sidebar_menu.js') }}"></script>
+		<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+		<script>
+			// Khởi tạo socket nếu chưa có
+			window.socket = window.socket || io();
+			const socket = window.socket;
 
+			// Tải thông báo cũ từ localStorage
+			window.addEventListener("DOMContentLoaded", () => {
+				const saved = JSON.parse(localStorage.getItem("notifications") || "[]");
+				saved.forEach((item, index) => {
+					renderMessage(item.message, item.type, index);
+				});
+			});
+
+			// Lắng nghe socket message
+			socket.on("udp_message", function (data) {
+				const alertContainer = document.getElementById("socketAlertContainer");
+				const alertMessage = document.getElementById("socketAlertMessage");
+
+				if (alertContainer && alertMessage) {
+					alertMessage.textContent = data.message;
+					alertContainer.classList.remove("d-none");
+					setTimeout(() => alertContainer.classList.add("d-none"), 5000);
+				}
+
+				let notifications = JSON.parse(
+					localStorage.getItem("notifications") || "[]"
+				);
+
+				// Thêm vào localStorage với cả message và type
+				notifications.push({
+					message: data.message,
+					type: data.type || 1, // Mặc định type = 1 nếu không có
+				});
+				localStorage.setItem("notifications", JSON.stringify(notifications));
+
+				// Gọi render với đầy đủ dữ liệu
+				renderMessage(data.message, data.type || 1, notifications.length - 1);
+			});
+
+			// Hiện/ẩn box
+			let isHidden = true;
+			function toggleBox() {
+				const box = document.getElementById("messageBox");
+				const icon = document.querySelector("#toggleButton i");
+
+				isHidden = !isHidden;
+				box.classList.toggle("hidden", isHidden);
+
+				// Đổi icon chuông
+				icon.className = isHidden ? "fas fa-bell" : "fas fa-bell-slash";
+			}
+
+			// 🧹 Xóa tất cả
+			function clearAllNotifications() {
+				localStorage.removeItem("notifications");
+				document.getElementById("messageContent").innerHTML = "";
+			}
+
+			// 🧽 Xóa từng thông báo
+			function deleteNotification(index) {
+				let notifications = JSON.parse(
+					localStorage.getItem("notifications") || "[]"
+				);
+				notifications.splice(index, 1);
+				localStorage.setItem("notifications", JSON.stringify(notifications));
+
+				// Cập nhật lại danh sách trên giao diện
+				const container = document.getElementById("messageContent");
+				container.innerHTML = "";
+				notifications.forEach((item, idx) => {
+					renderMessage(item.message, item.type, idx);
+				});
+			}
+
+			// 🧾 Tạo thông báo HTML
+			function renderMessage(message, type, index) {
+				const container = document.getElementById("messageContent");
+				const p = document.createElement("div");
+
+				let bgClass =
+					{
+						1: "bg_text_blue",
+						2: "bg_text_yellow",
+						3: "bg_text_red",
+					}[type] || "bg-secondary";
+
+				p.className = `d-flex justify-content-between align-items-start mb-2 ${bgClass}`;
+
+				p.innerHTML = `
+		<span>${message}</span>
+		<button class="btn btn-sm" onclick="deleteNotification(${index})" title="Xóa thông báo">
+			<i class="fas fa-times"></i>
+		</button>
+	`;
+				container.appendChild(p);
+			}
+		</script>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				const current_path = window.location.pathname;
@@ -98,7 +196,8 @@
 									const iframe = document.getElementById("app_container");
 									iframe.srcdoc = html;
 								} catch (error) {
-									console.error("Error: ", error);
+									//console.error("Error: ", error);
+									console.log(error);
 								}
 							}
 							let newRoute = route;

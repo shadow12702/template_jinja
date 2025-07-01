@@ -200,7 +200,123 @@ code {
 	margin-bottom: 20px;
 }
 
-
-.bg-primary{
+.bg-primary {
 	background-color: var(--primary-color) !important;
+}
+
+/* notification box  */
+
+.message-box {
+	position: fixed;
+	bottom: 80px; /* đẩy lên để không che nút chuông */
+	right: 20px;
+	width: 350px;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	border: 1px solid #e0e0e0;
+	z-index: 1050;
+	transition: all 0.3s ease;
+}
+
+.message-header {
+	background: var(--secondary-color);
+	color: white;
+	padding: 15px 20px;
+	border-radius: 10px 10px 0 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.message-content {
+	padding: 20px;
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.btn-toggle {
+	background: none;
+	border: none;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
+	padding: 5px;
+	border-radius: 3px;
+}
+
+.btn-toggle:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.message-box.hidden {
+	display: none;
+}
+
+.notify-icon-btn {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	background-color: var(--secondary-color);
+	border: none;
+	border-radius: 50%;
+	color: white;
+	font-size: 20px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+	z-index: 1060;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.3s;
+}
+
+.notify-icon-btn:hover {
+	background-color: var(--tertiary-color);
+}
+
+@media (max-width: 768px) {
+	.message-box {
+		width: 90%;
+		right: 5%;
+	}
+}
+
+.message-content button {
+	padding: 2px 6px;
+	font-size: 12px;
+}
+.bg_text {
+	padding: 10px;
+	width: auto;
+	border-radius: 10px;
+	background: #6c757d1c;
+}
+
+.bg_text_red {
+	background-color: #f8d7da;
+	color: #721c24;
+	border-radius: 5px;
+	padding: 10px;
+}
+.bg_text_blue {
+	background-color: #d1ecf1;
+	color: #0c5460;
+	border-radius: 5px;
+	padding: 10px;
+}
+.bg_text_yellow {
+	background-color: #fff3cd;
+	color: #856404;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+
+/* checkbox  */
+.form-check-input:checked {
+	background-color: var(--button-bg);
+	border-color: var(--button-bg);
 }

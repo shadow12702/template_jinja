@@ -14,33 +14,34 @@ def best_practice_management():
     _list = best_practice_service.get_best_practices()    
     return render_template("best_practices.html", best_practices=_list)
 
-#---------------------------------------Add Best Practice----------------------------#
+
 
 @best_practice_route.route("/add")
 def add_best_practice():
+    ''' Render add best practice page '''
     return render_template("add_best_practice.html")
 
-#---------------------------------------Add Best Practice Action ----------------------------#
 
 @best_practice_route.route("/add_new_best_practice", methods=["GET", "POST"])
 def add_new_best_practice():
+    ''' Add new best practice action '''
     _new_best_practice = BestPracticeRequest(**request.form)
     response = best_practice_service.add_best_practice_action(_new_best_practice)
     if response.status_code == 200:
-        return url_for("best_practice_route.best_practice_management")  
+        return redirect(url_for("base.admin.best_practice.best_practice_management", route="/best-practice")) 
     else:
         return render_template("add_best_practice.html" , error=f"Lỗi khi thêm best practice: {response.text}")
 
-#--------------------------------------Detail Best Practice----------------------------#
 
 @best_practice_route.route("/detail/<id>")
+# -Detail Best Practice
 def detail_best_practice(id):
     best_practice = best_practice_service.get_best_practice_by_id(id)
     return render_template("detail_best.html", best_practice=best_practice)
 
-#---------------------------------------Edit Best Practice----------------------------#
 
 @best_practice_route.route("/update_info_best_practice/<id>", methods=["GET", "POST"])
+#Edit Best Practice
 def update_best_practice(id):
     _update_best_practice = BestPracticeRequest(**request.form)
     response = best_practice_service.update_best_practice_action(id, _update_best_practice)

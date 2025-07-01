@@ -1,216 +1,203 @@
 <!-- header.html -->
 
-<link
-	rel="stylesheet"
-	href="{{ url_for('static', filename='css/header.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}" />
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
-	<div class="container-fluid align-items-center">
-		<!-- Logo and Toggle Button -->
-		<div class="app-brand me-5">
-			<a href="/" class="app-brand-link">OSAS</a>
-		</div>
-		<button
-			class="sidebar-toggle-btn"
-			id="sidebarToggleBtn"
-			onclick="toggleSidebar()">
-			<i class="fas fa-bars"></i>
-		</button>
+    <div class="container-fluid align-items-center">
+        <!-- Logo and Toggle Button -->
+        <div class="app-brand me-5">
+            <a href="/" class="app-brand-link">OSAS</a>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
 
-		<!-- Customer Dropdown -->
-		<div class="dropdown me-5">
-			<button
-				class="btn btn-outline-secondary dropdown-toggle"
-				type="button"
-				id="customerDropdown"
-				data-bs-toggle="dropdown"
-				aria-expanded="false">
-				Select Customer
-			</button>
-			<ul class="dropdown-menu" aria-labelledby="customerDropdown">
-				{% if customers %} {% if customers|length >= 2 %} {% for customer in
-				customers %}
-				<li>
-					<button
-						class="dropdown-item customer-select-btn"
-						type="button"
-						data-cus-code="{{ customer.code }}"
-						data-cus-name="{{ customer.name }}"
-						value="{{ customer.code }}">
-						{{ customer.name }}
-					</button>
-				</li>
-				{% endfor %} {% else %}
-				<li>
-					<button
-						class="dropdown-item customer-select-btn active"
-						type="button"
-						data-cus-code="{{ customers[0].code }}"
-						data-cus-name="{{ customers[0].name }}"
-						value="{{ customers[0].code }}"
-						onselect="{{ '/customer/' }}">
-						{{ customers[0].name }}
-					</button>
-				</li>
-				{% endif %} {% else %}
-				<li>
-					<button class="dropdown-item disabled" type="button">
-						No customer select
-					</button>
-				</li>
-				{% endif %}
-			</ul>
-		</div>
 
-		<!-- Database Dropdown -->
-		<div class="dropdown" id="databaseDropdownContainer" style="display: none">
-			<button
-				class="btn btn-outline-secondary dropdown-toggle"
-				type="button"
-				id="databaseDropdown"
-				data-bs-toggle="dropdown"
-				aria-expanded="false">
-				Select Database
-			</button>
-			<ul class="dropdown-menu" aria-labelledby="databaseDropdown"></ul>
-		</div>
+        <!-- Customer Dropdown -->
+        <div class="dropdown me-5">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="customerDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Select Customer
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="customerDropdown">
+                {% if customers %}
+                {% if customers|length >= 2 %}
+                {% for customer in customers %}
+                <li>
+                    <button class="dropdown-item customer-select-btn" type="button" data-cus-code="{{ customer.code }}"
+                        data-cus-name="{{ customer.name }}" value="{{ customer.code }}">
+                        {{ customer.name }}
+                    </button>
+                </li>
+                {% endfor %}
+                {% else %}
+                <li>
+                    <button class="dropdown-item customer-select-btn active" type="button"
+                        data-cus-code="{{ customers[0].code }}" data-cus-name="{{ customers[0].name }}"
+                        value="{{ customers[0].code }}" onselect="{{ '/customer/' }}">
+                        {{ customers[0].name }}
+                    </button>
+                </li>
+                {% endif %}
+                {% else %}
+                <li>
+                    <button class="dropdown-item disabled" type="button">
+                        No customer select
+                    </button>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
 
-		<!-- User Profile Section -->
-		<div
-			class="header-actions d-flex justify-content-end align-items-center gap-3 flex-grow-1">
-			<div class="user-dropdown position-relative">
-				<img
-					src="{{ url_for('static', filename='images/avatar.svg') }}"
-					class="rounded-circle avatar"
-					width="32"
-					height="32"
-					alt="User"
-					onclick="toggleUserDropdown()" />
 
-				<div class="dropdown-menu-custom" id="userDropdown">
-					<div class="user-info py-3">
-						<div class="avatar-container mb-2 text-center">
-							<img
-								src="{{ url_for('static', filename='images/avatar.svg') }}"
-								class="rounded-circle mb-2"
-								width="60"
-								height="60"
-								alt="{{ user.username }}" />
-						</div>
-						<div style="margin-left: 10px">
-							<h6 class="mb-0">{{ user.username }}</h6>
-							<p class="text-muted small">{{ user.email }}</p>
-						</div>
-					</div>
-					<hr class="my-2" />
-					<ul class="list-unstyled px-3">
-						<!-- <li><a href="/profile" class="text-decoration-none text-dark">
+        <!-- Database Dropdown -->
+        <div class="dropdown" id="databaseDropdownContainer" style="display: none">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="databaseDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Select Database
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="databaseDropdown">
+                <!-- {% if db_repo_info %} 
+                {% for db in db_repo_info %}
+                <li>
+                    <button class="dropdown-item database-select-btn" type="button" data-cus-code="{{ db.customer_code }}"
+                        data-db-name="{{ db.db_name }}" value="{{ db.customer_code }}">
+                        {{ db.db_name }} 
+                    </button>
+                </li>
+                {% endfor %} 
+                {% else %}
+                <li>
+                    <button class="dropdown-item disabled" type="button">
+                        No databases available
+                    </button>
+                </li>
+                {% endif %} -->
+            </ul>
+        </div>
+        <!-- 🔔 Thông báo từ socket -->
+        <div id="socketAlertContainer" class="alert alert-info alert-dismissible fade show d-none w-30 mt-2"
+            style="position: absolute;font-size: 12px;top:50px ;right: 0;z-index: 100;" role="alert">
+            <span id="socketAlertMessage"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <!-- User Profile Section -->
+        <div class="header-actions d-flex justify-content-end align-items-center gap-3 flex-grow-1">
+            <div class="user-dropdown position-relative">
+                <img src="{{ url_for('static', filename='images/avatar.svg') }}" class="rounded-circle avatar"
+                    width="32" height="32" alt="User" onclick="toggleUserDropdown()" />
+
+                <div class="dropdown-menu-custom" id="userDropdown">
+                    <div class="user-info py-3">
+                        <div class="avatar-container mb-2 text-center">
+                            <img src="{{ url_for('static', filename='images/avatar.svg') }}" class="rounded-circle mb-2"
+                                width="60" height="60" alt="{{ user.username }}" />
+                        </div>
+                        <div style="margin-left: 10px;">
+                            <h6 class="mb-0">{{ user.username }}</h6>
+                            <p class="text-muted small">{{ user.email }}</p>
+                        </div>
+                    </div>
+                    <hr class="my-2" />
+                    <ul class="list-unstyled px-3">
+                        <!-- <li><a href="/profile" class="text-decoration-none text-dark">
                             <i class="fa fa-user me-2"></i>Profile</a>
                         </li> -->
-						{% if user.is_admin == 1 %}
-						<li>
-							<a href="/admin" class="text-dark text-decoration-none">
-								<i class="fa fa-tasks me-2"></i>Admin Management</a
-							>
-						</li>
-						{% endif%}
-					</ul>
-					<div class="px-3 py-2">
-						<a href="/logout"
-							><button
-								class="btn btn-outline-danger w-100"
-								onclick="return confirm('Are you sure about that ?')">
-								Logout
-							</button></a
-						>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        {% if user.is_admin == 1 %}
+                        <li><a href="/admin" class="text-dark text-decoration-none">
+                                <i class="fa fa-tasks me-2"></i>Admin Management</a>
+                        </li>
+                        {% endif%}
+                    </ul>
+                    <div class="px-3 py-2">
+                        <a href="/logout"><button class="btn btn-outline-danger w-100"
+                                onclick="return confirm('Are you sure about that ?')">Logout</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<script src="{{ url_for('static', filename='js/header.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
 
-	<script>
-		let selectedDatabase = null;
-		document.addEventListener("DOMContentLoaded", function () {
-			document.querySelectorAll(".customer-select-btn").forEach((btn) => {
-				btn.addEventListener("click", function () {
-					const customerCode = this.getAttribute("data-cus-code");
-					const requestData = {
-						customer_code: customerCode,
-					};
-					fetch("/admin/awr-repo/get-awr-data", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(requestData),
-					})
-						.then((response) => response.json())
-						.then((data) => {
-							updateAwrDatabaseDropdown(data, customerCode);
-						})
-						.catch((error) => {
-							console.error("Error while fetching awr info: ", error);
-						});
-				});
-			});
+    <script>
+        let selectedDatabase = null;
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.customer-select-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const customerCode = this.getAttribute('data-cus-code');
+                    const requestData = {
+                        'customer_code': customerCode
+                    };
+                    fetch('/admin/awr-repo/get-awr-data', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestData)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            updateAwrDatabaseDropdown(data, customerCode);
+                        })
+                        .catch(error => {
+                            console.error('Error while fetching awr info: ', error)
+                        });
+                });
+            });
 
-			///update Awr Database Dropdown
-			function updateAwrDatabaseDropdown(databases, customerCode) {
-				const dropdownContainer = document.getElementById(
-					"databaseDropdownContainer"
-				);
-				const dropdownButton = document.querySelector("#databaseDropdown");
-				const dropdownMenu = document.querySelector(
-					"#databaseDropdownContainer .dropdown-menu"
-				);
-				///show dropdown when has value
-				if (databases && databases.length > 0) {
-					dropdownContainer.style.display = "block";
-					dropdownMenu.innerHTML = "";
+            ///update Awr Database Dropdown
+            function updateAwrDatabaseDropdown(databases, customerCode) {
+                const dropdownContainer = document.getElementById('databaseDropdownContainer');
+                const dropdownButton = document.querySelector('#databaseDropdown');
+                const dropdownMenu = document.querySelector('#databaseDropdownContainer .dropdown-menu');
+                ///show dropdown when has value
+                if (databases && databases.length > 0) {
+                    dropdownContainer.style.display = 'block';
+                    dropdownMenu.innerHTML = '';
 
-					databases.forEach((dbData) => {
-						const db = dbData.database;
-						const li = document.createElement("li");
-						const btn = document.createElement("button");
-						btn.className = "dropdown-item database-select-btn";
-						btn.type = "button";
-						btn.innerHTML = db.database_name;
+                    databases.forEach(dbData => {
+                        const db = dbData.database;
+                        const li = document.createElement('li');
+                        const btn = document.createElement('button');
+                        btn.className = 'dropdown-item database-select-btn';
+                        btn.type = 'button';
+                        btn.innerHTML = db.database_name
 
-						btn.dataset.database = JSON.stringify(db);
-						btn.addEventListener("click", function () {
-							selectedDatabase = db;
-							dropdownButton.textContent = `Selected: ${db.database_name}`;
-							///enable event selection_changed database
-							document.dispatchEvent(
-								new CustomEvent("databaseChanged", {
-									detail: { database: db },
-								})
-							);
-						});
-						li.appendChild(btn);
+                        btn.dataset.database = JSON.stringify(db);
+                        btn.addEventListener('click', function () {
+                            selectedDatabase = db;
+                            dropdownButton.textContent = `Selected: ${db.database_name}`;
+                            ///enable event selection_changed database
+                            document.dispatchEvent(new CustomEvent('databaseChanged', {
+                                detail: { database: db }
+                            }));
+                            console.log(db)
+                        });
 
-						// li.innerHTML = `
-						// <button class="dropdown-item database-select-btn" type="button"
-						//     data-cus-code="${customerCode}"
-						//     data-db-name="${db.database.database_name}"
-						//     value="${db.database.dbid}">
-						//     ${db.database.database_name}
-						// </button>
-						// `;
-						dropdownMenu.appendChild(li);
-					});
-				} else {
-					dropdownContainer.style.display = "none";
-				}
-			}
-		});
+                        li.appendChild(btn);
 
-		///get selected database
-		function getSelectedDatabase() {
-			return selectedDatabase;
-		}
-	</script>
+                        // li.innerHTML = `
+                        // <button class="dropdown-item database-select-btn" type="button" 
+                        //     data-cus-code="${customerCode}"
+                        //     data-db-name="${db.database.database_name}" 
+                        //     value="${db.database.dbid}">
+                        //     ${db.database.database_name}
+                        // </button>
+                        // `;
+                        dropdownMenu.appendChild(li);
+                    });
+                }
+                else {
+                    dropdownContainer.style.display = 'none';
+                }
+            }
+        });
+
+        ///get selected database
+        function getSelectedDatabase() {
+            return selectedDatabase;
+        }
+
+    </script>
 </nav>
